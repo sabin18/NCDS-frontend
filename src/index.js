@@ -6,7 +6,6 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import store from './reduxStore';
-// import './styles/styles.scss';
 import 'regenerator-runtime/runtime';
 
 const Root = () => (
