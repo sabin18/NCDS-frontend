@@ -4,12 +4,12 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
-// import isAuth from '../helpers/isAuthenticated';
+import isAuth from '../helpers/isAuthenticated';
 
 export default class ProtectedRoute extends Component {
   render() {
     const { component: Component, ...props } = this.props;
-    return <Route {...props} render={(props) => <Component {...props} />} />;
+    return (isAuth()) ? <Route {...props} render={(props) => <Component {...props} />} /> : window.location.replace('/login');
   }
 }
 

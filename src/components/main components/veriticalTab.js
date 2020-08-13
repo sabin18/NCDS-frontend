@@ -6,6 +6,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import VerticalTabStyles from '../../styles/veriticalTab';
+import NotFound from '../NotFound';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -69,10 +70,10 @@ export default function VerticalTabs() {
         Patients
       </TabPanel>
       <TabPanel value={value} index={1}>
-      Medical Records
+       Medical Records
       </TabPanel>
       <TabPanel value={value} index={2}>
-       Medications
+       <NotFound />
       </TabPanel>
       <TabPanel value={value} index={3}>
         Diseases
