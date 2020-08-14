@@ -1,6 +1,6 @@
 import { blue } from '@material-ui/core/colors';
 
-const authStyles = theme => ({
+const authStyles = (theme) => ({
   root: {
     height: '100vh',
   },
