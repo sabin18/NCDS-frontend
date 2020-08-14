@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
-import resetPageReducer from './resetPageReducer';
+import authReducer from './authReducer';
 
 export default combineReducers({
-  resetPageReducer,
+  auth: authReducer,
 
 });

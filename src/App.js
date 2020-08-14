@@ -6,20 +6,24 @@
 import React, { Component } from 'react';
 import { ToastContainer } from 'react-toastify';
 import {
-  BrowserRouter as Router, Switch, withRouter,
+  BrowserRouter as Router, Route, Switch, withRouter,
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Dashboard from './views/Dashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 import NotFound from './components/NotFound';
+import Authentication from './views/authentication';
 
 export class App extends Component {
   render() {
+    // const { location: { pathname } } = this.props;
     return (
       <Router>
         <Switch>
-          <ProtectedRoute path="/" component={Dashboard} />
-          <ProtectedRoute path="*" component={NotFound} />
+          <ProtectedRoute exact path="/" component={Dashboard} />
+          <Route path="/login" component={Authentication} />
+          <Route path="/forgotpassword" component={Authentication} />
+          <ProtectedRoute exact path="*" component={NotFound} />
         </Switch>
         <ToastContainer />
       </Router>
