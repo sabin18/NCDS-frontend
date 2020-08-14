@@ -16,12 +16,10 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import responseComponent from '../main components/responseComponent';
 import authStyles from '../../styles/authStyles';
 import Copyright from './copyright';
-import userLogin from '../../actions/authActions';
+import { userLogin } from '../../actions/authActions';
 
-const { ErrorResponse, SuccessResponse } = responseComponent;
 export class SignIn extends Component {
    state = {
      email: '',
