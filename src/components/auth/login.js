@@ -14,9 +14,10 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
-// import Snackbar from '@material-ui/core/Snackbar';
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import responseComponent from '../main components/responseComponent';
-import loginStyles from '../../styles/loginStyles';
+import authStyles from '../../styles/authStyles';
 import Copyright from './copyright';
 import userLogin from '../../actions/authActions';
 
@@ -26,7 +27,12 @@ export class SignIn extends Component {
      email: '',
      password: '',
      isLoading: false,
+     open: false,
    };
+
+    handleClose = () => {
+      this.setState({ open: false });
+    };
 
    handleSubmit = async (e) => {
      e.preventDefault();
@@ -35,8 +41,12 @@ export class SignIn extends Component {
        email,
        password,
      };
+     this.setState({ isLoading: true, open: true });
      const { userLogin: login } = this.props;
      await login(credentials);
+     this.setState({
+       isLoading: false, open: false, email: '', password: '',
+     });
    };
 
    handleChange = (e) => {
@@ -49,11 +59,22 @@ export class SignIn extends Component {
 
    render() {
      const { classes, data } = this.props;
-     const { password, email } = this.state;
+     const {
+       password, email, isLoading, open,
+     } = this.state;
      document.title = 'NCDS - Sign In';
      return (
         <div className={classes.paper}>
-          {data && data.message && <Redirect to="/"/>}
+         {isLoading && (
+        <Backdrop
+          className={classes.backdrop}
+          open={open}
+          onClick={this.handleClose}
+        >
+       <CircularProgress className={classes.buttonProgress} />
+        </Backdrop>
+         )}
+          {data && data.message && <Redirect to="/" />}
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
@@ -96,6 +117,7 @@ export class SignIn extends Component {
               fullWidth
               variant="contained"
               color="primary"
+              disabled={isLoading}
               className={classes.submit}
             >
               Sign In
@@ -131,4 +153,4 @@ export const mapStateToProps = (state) => ({
   status: state.auth.status,
 });
 
-export default compose(withRouter, connect(mapStateToProps, { userLogin }))(withStyles(loginStyles)(SignIn));
+export default compose(withRouter, connect(mapStateToProps, { userLogin }))(withStyles(authStyles)(SignIn));

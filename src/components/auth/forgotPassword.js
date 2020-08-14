@@ -3,20 +3,13 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
-import loginStyles from '../../styles/loginStyles';
 import Copyright from './copyright';
-import userLogin from '../../actions/authActions';
+import authStyles from '../../styles/authStyles';
 
 export class ForgotPassword extends Component {
 
@@ -74,7 +67,7 @@ export class ForgotPassword extends Component {
 }
 
 ForgotPassword.propTypes = {
-
+  classes: PropTypes.object,
 };
 
 export const mapStateToProps = (state) => ({
@@ -83,4 +76,4 @@ export const mapStateToProps = (state) => ({
   status: state.auth.status,
 });
 
-export default compose(withRouter, connect(mapStateToProps, {}))(withStyles(loginStyles)(ForgotPassword));
+export default compose(withRouter, connect(mapStateToProps, {}))(withStyles(authStyles)(ForgotPassword));

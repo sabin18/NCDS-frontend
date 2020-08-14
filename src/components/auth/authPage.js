@@ -1,16 +1,17 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { Route } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import { withStyles } from '@material-ui/core/styles';
 import authStyles from '../../styles/authStyles';
 import SignIn from './login';
 import ForgotPassword from './forgotPassword';
 
-const AuthPage = () => {
-  const classes = authStyles();
-
-  return (
+export class AuthPage extends Component {
+  render() {
+    const { classes, data } = this.props;
+    return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
@@ -25,7 +26,8 @@ const AuthPage = () => {
         </div>
       </Grid>
     </Grid>
-  );
-};
+    );
+  }
+}
 
-export default AuthPage;
+export default withStyles(authStyles)(AuthPage);
