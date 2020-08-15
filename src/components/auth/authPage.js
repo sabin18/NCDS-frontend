@@ -7,10 +7,11 @@ import { withStyles } from '@material-ui/core/styles';
 import authStyles from '../../styles/authStyles';
 import SignIn from './login';
 import ForgotPassword from './forgotPassword';
+import ResetPassword from './ResetPassword';
 
 export class AuthPage extends Component {
   render() {
-    const { classes, data } = this.props;
+    const { classes,token } = this.props;
     return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -22,6 +23,9 @@ export class AuthPage extends Component {
         </Route>
         <Route path="/forgotpassword">
          <ForgotPassword />
+        </Route>
+        <Route path="/resetpassword/:token">
+        <ResetPassword token={token} />
         </Route>
         </div>
       </Grid>

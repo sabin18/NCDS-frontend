@@ -1,4 +1,4 @@
-import { LOGIN_SUCCESS, LOGIN_FAILURE, RESET_PASSWORD_REQUEST_SUCESS, RESET_PASSWORD_REQUEST_FAILURE, RESET_PASSWORD_SUCCESS, RESET_PASSWORD_FAILURE} from './types';
+import { LOGIN_SUCCESS, LOGIN_FAILURE, RESET_PASSWORD_REQUEST_SUCESS, RESET_PASSWORD_REQUEST_FAILURE, RESET_PASSWORD_SUCCESS, RESET_PASSWORD_FAILURE } from './types';
 import { storeToken } from '../helpers/authHelpers';
 import backendCall from '../helpers/backendCall';
 import responseComponent from '../components/main components/responseComponent';
@@ -41,4 +41,17 @@ export const resetPaswordRequest = (email) => (dispatch) => backendCall.post('/a
     ErrorResponse(error.response.data.Error);
   });
 
-export default { userLogin, resetPaswordRequest};
+export const resetPasword = (newPassword, confirmPassword, token) => (dispatch) => backendCall.patch(`auth/users/resetpassword/${token}`, { newPassword, confirmPassword })
+
+  .then((res) => {
+    const response = res.data;
+    dispatch(
+      authType(RESET_PASSWORD_SUCCESS, response),
+    );
+  }).catch((error) => {
+    dispatch(
+      authType(RESET_PASSWORD_FAILURE, error.response.data),
+    );
+  });
+
+export default { userLogin, resetPaswordRequest, resetPasword };
