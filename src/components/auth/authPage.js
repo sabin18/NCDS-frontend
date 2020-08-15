@@ -7,7 +7,8 @@ import { withStyles } from '@material-ui/core/styles';
 import authStyles from '../../styles/authStyles';
 import SignIn from './login';
 import ForgotPassword from './forgotPassword';
-import ResetPassword from './ResetPassword';
+import ResetPassword from './resetPassword';
+import VerifyUser from './verify';
 
 export class AuthPage extends Component {
   render() {
@@ -26,6 +27,9 @@ export class AuthPage extends Component {
         </Route>
         <Route path="/resetpassword/:token">
         <ResetPassword token={token} />
+        </Route>
+        <Route path="/verify/:token">
+        <VerifyUser token={token} />
         </Route>
         </div>
       </Grid>

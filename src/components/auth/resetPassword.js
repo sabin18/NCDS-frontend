@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import Button from '@material-ui/core/Button';
@@ -53,8 +53,7 @@ export class ResetPassword extends Component {
    };
 
    render() {
-     const { classes, data, dataError, token } = this.props;
-     console.log('Token====>', dataError && dataError.Error);
+     const { classes, data, dataError} = this.props;
      const { newPassword, confirmPassword, isLoading, open, alert } = this.state;
      document.title = 'NCDS - reset password';
      return (
@@ -68,24 +67,7 @@ export class ResetPassword extends Component {
        <CircularProgress className={classes.buttonProgress} />
         </Backdrop>
           )}
-          {data && data.message && (
-            <Collapse in={alert}>
-                <Alert
-                  action={(
-                    <IconButton
-                      aria-label="close"
-                      color="inherit"
-                      size="small"
-                      onClick={this.handleHide}
-                    >
-                      <CloseIcon fontSize="inherit" />
-                    </IconButton>
-                  )}
-                >
-                  {data.message}
-                </Alert>
-            </Collapse>
-          )}
+           {data && data.message && <Redirect to="/login" />}
           <Typography component="h1" variant="h5">
             Reset password
           </Typography>
@@ -160,7 +142,7 @@ ResetPassword.propTypes = {
   resetPasword: PropTypes.func,
   data: PropTypes.object,
   token: PropTypes.string,
-  dataError: PropTypes.object.string,
+  dataError: PropTypes.object,
 };
 
 export const mapStateToProps = (state) => ({
