@@ -23,6 +23,8 @@ export class App extends Component {
           <ProtectedRoute exact path="/" component={Dashboard} />
           <Route path="/login" component={Authentication} />
           <Route path="/forgotpassword" component={Authentication} />
+          <Route path="/resetpassword/:token" component={Authentication} />
+          <Route path="/verify/:token" component={Authentication} />
           <ProtectedRoute exact path="*" component={NotFound} />
         </Switch>
         <ToastContainer />
