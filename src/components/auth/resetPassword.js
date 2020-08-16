@@ -6,6 +6,8 @@ import { compose } from 'redux';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
+import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -128,6 +130,13 @@ export class ResetPassword extends Component {
                 </Alert>
             </Collapse>
             )}
+            <Grid container>
+              <Grid item xs>
+                <Link href="/forgotpassword" variant="body2">
+                  Request New Link?
+                </Link>
+              </Grid>
+            </Grid>
             <Box mt={5}>
               <Copyright />
             </Box>

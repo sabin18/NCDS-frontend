@@ -50,6 +50,7 @@ export default (state = initialState, action) => {
     case RESET_PASSWORD_FAILURE:
       return {
         ...state,
+        data: null,
         dataError: action.payload,
         status: 'Failure',
       };
