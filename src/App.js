@@ -13,6 +13,7 @@ import Dashboard from './views/Dashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 import NotFound from './components/NotFound';
 import Authentication from './views/authentication';
+import AllMypharmacies from './views/AllMyPharmacies';
 
 export class App extends Component {
   render() {
@@ -25,6 +26,7 @@ export class App extends Component {
           <Route path="/forgotpassword" component={Authentication} />
           <Route path="/resetpassword/:token" component={Authentication} />
           <Route path="/verify/:token" component={Authentication} />
+          <ProtectedRoute exact path="/pharmacy" component={ AllMypharmacies} />
           <ProtectedRoute exact path="*" component={NotFound} />
         </Switch>
         <ToastContainer />

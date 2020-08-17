@@ -17,7 +17,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import authStyles from '../../styles/authStyles';
-import Copyright from './copyright';
+import Copyright from '../copyright';
 import { userLogin } from '../../actions/authActions';
 
 export class SignIn extends Component {
@@ -29,7 +29,7 @@ export class SignIn extends Component {
    };
 
     handleClose = () => {
-      this.setState({ open: false });
+      this.setState({ open: false, isLoading: false });
     };
 
    handleSubmit = async (e) => {
@@ -72,7 +72,7 @@ export class SignIn extends Component {
        <CircularProgress className={classes.buttonProgress} />
         </Backdrop>
          )}
-          {data && data.message && <Redirect to="/" />}
+          {data && data.message && <Redirect to="/pharmacy" />}
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
