@@ -29,7 +29,7 @@ export class AllMypharmacy extends Component {
 
    async componentDidMount() {
      const { props } = this;
-     this.setState({ isLoading: true});
+     this.setState({ isLoading: true });
      await props.GetAllMyBusiness();
      this.setState({ isLoading: false });
    }
@@ -60,7 +60,7 @@ export class AllMypharmacy extends Component {
             </div>
             )
             : Mypharmacy && Mypharmacy.map((item) => (
-             <Link style={{ textDecoration: 'none', color: 'black' }} to={`/`}>
+             <Link style={{ textDecoration: 'none', color: 'black' }} to={`/dashboard/${item.id}`}>
             <List key={item.id}>
                 <Divider />
                 <ListItem
@@ -85,7 +85,7 @@ export class AllMypharmacy extends Component {
                 </ListItem>
                 <Divider />
             </List>
-            </Link>
+             </Link>
             ))}
           </List>
           </Grid>

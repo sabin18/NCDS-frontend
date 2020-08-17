@@ -13,15 +13,24 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import { connect } from 'react-redux';
+import { withRouter, Link } from 'react-router-dom';
+import { compose } from 'redux';
+import { GetOneMyBusiness } from '../../actions/pharmacyActions';
 import menuStyle from '../../styles/menuStyle';
 
-export default function PrimarySearchAppBar() {
+function PrimarySearchAppBar(props) {
   const classes = menuStyle();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  React.useEffect(() => {
+    // Update the document title using the browser
+    const { singlePharmacy } = props;
+  });
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -110,7 +119,10 @@ export default function PrimarySearchAppBar() {
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            DCDS APPLICATION
+            DCDS (
+            {props.singlePharmacy
+             && props.singlePharmacy.data.name}
+              )
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
@@ -166,3 +178,11 @@ export default function PrimarySearchAppBar() {
     </div>
   );
 }
+
+export const mapStateToProps = (state) => ({
+  singlePharmacy: state.pharmacy.singleBusiness,
+  singlePharmacyError: state.pharmacy.singleBusinessError,
+  status: state.pharmacy.status,
+});
+
+export default compose(withRouter, connect(mapStateToProps, { GetOneMyBusiness }))(PrimarySearchAppBar);
