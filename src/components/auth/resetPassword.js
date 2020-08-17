@@ -16,7 +16,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Collapse from '@material-ui/core/Collapse';
 import CloseIcon from '@material-ui/icons/Close';
 import Alert from '@material-ui/lab/Alert';
-import Copyright from './copyright';
+import Copyright from '../copyright';
 import authStyles from '../../styles/authStyles';
 import { resetPasword } from '../../actions/authActions';
 

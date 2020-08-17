@@ -7,7 +7,7 @@ import Box from '@material-ui/core/Box';
 import { withStyles } from '@material-ui/core/styles';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Copyright from './copyright';
+import Copyright from '../copyright';
 import authStyles from '../../styles/authStyles';
 import { VerifyUsers } from '../../actions/authActions';
 
