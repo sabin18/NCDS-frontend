@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -42,7 +42,8 @@ export class ResetPassword extends Component {
    const { token } = props;
    this.setState({ isLoading: true, open: true, alert: false });
    await props.resetPasword(state.newPassword, state.confirmPassword, token);
-   this.setState({ isLoading: false, open: false, newPassword: '', confirmPassword: '', alert: true,
+   this.setState({
+     isLoading: false, open: false, newPassword: '', confirmPassword: '', alert: true,
    });
  };
 
@@ -55,8 +56,12 @@ export class ResetPassword extends Component {
    };
 
    render() {
-     const { classes, data, dataError} = this.props;
-     const { newPassword, confirmPassword, isLoading, open, alert } = this.state;
+     const {
+       classes, data, dataError, history,
+     } = this.props;
+     const {
+       newPassword, confirmPassword, isLoading, open, alert,
+     } = this.state;
      document.title = 'NCDS - reset password';
      return (
         <div className={classes.paper}>
@@ -69,7 +74,7 @@ export class ResetPassword extends Component {
        <CircularProgress className={classes.buttonProgress} />
         </Backdrop>
           )}
-           {data && data.message && <Redirect to="/login" />}
+           {data && data.message && history.push('/login')}
           <Typography component="h1" variant="h5">
             Reset password
           </Typography>
@@ -86,7 +91,7 @@ export class ResetPassword extends Component {
             type="password"
             id="password"
             autoComplete="current-password"
-            />
+          />
             <TextField
               variant="outlined"
               margin="normal"
@@ -112,7 +117,7 @@ export class ResetPassword extends Component {
             {dataError && dataError.Error && (
             <Collapse in={alert}>
                 <Alert
-                  variant="filled" 
+                  variant="filled"
                   severity="error"
                   action={(
                     <IconButton
@@ -151,6 +156,7 @@ ResetPassword.propTypes = {
   resetPasword: PropTypes.func,
   data: PropTypes.object,
   token: PropTypes.string,
+  history: PropTypes.object.isRequired,
   dataError: PropTypes.object,
 };
 
