@@ -29,7 +29,6 @@ function PrimarySearchAppBar(props) {
 
   React.useEffect(() => {
     // Update the document title using the browser
-    const { singlePharmacy } = props;
   });
 
   const handleProfileMenuOpen = (event) => {
