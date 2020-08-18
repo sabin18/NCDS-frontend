@@ -60,8 +60,8 @@ export class AllMypharmacy extends Component {
             </div>
             )
             : Mypharmacy && Mypharmacy.map((item) => (
-             <Link style={{ textDecoration: 'none', color: 'black' }} to={`/dashboard/${item.id}`}>
-            <List key={item.id}>
+             <Link key={item.id} style={{ textDecoration: 'none', color: 'black' }} to={`/dashboard/${item.id}`}>
+            <List >
                 <Divider />
                 <ListItem
                   component="span"

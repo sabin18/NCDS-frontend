@@ -20,9 +20,9 @@ export class Main extends Component {
   async componentDidMount() {
     const { props } = this;
     const { business } = props;
-    this.setState({ isLoading: true });
+    this.setState({ isLoading: true, open: true });
     await props.GetOneMyBusiness(business);
-    this.setState({ isLoading: false });
+    this.setState({ isLoading: false, open: false });
   }
 
   render() {

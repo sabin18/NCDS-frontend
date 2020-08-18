@@ -120,8 +120,7 @@ function PrimarySearchAppBar(props) {
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
             DCDS (
-            {props.singlePharmacy
-             && props.singlePharmacy.data.name}
+            {props.singlePharmacy ? props.singlePharmacy.data.name : 'welcome To NCDS'}
               )
           </Typography>
           <div className={classes.search}>
