@@ -1,5 +1,8 @@
-import {MYBUSINESSES_SUCCESS, MYBUSINESSES_ERROR, MY_SINGLE_BUSINESSES_SUCCESS, MY_SINGLE_BUSINESSES_ERROR } from './types';
+import {
+  MYBUSINESSES_SUCCESS, MYBUSINESSES_ERROR, MY_SINGLE_BUSINESSES_SUCCESS, MY_SINGLE_BUSINESSES_ERROR,
+} from './types';
 import backendCall from '../helpers/backendCall';
+import { storebusinessId } from '../helpers/authHelpers';
 import responseComponent from '../components/main components/responseComponent';
 
 const { ErrorResponse, SuccessResponse } = responseComponent;
@@ -30,7 +33,10 @@ export const GetOneMyBusiness = (businessId) => async (dispatch) => {
   try {
     const res = await backendCall.get(`/pharmacy/${businessId}`, { headers: { Authorization: AuthUser } });
     const response = res.data;
-    dispatch(businessType(MY_SINGLE_BUSINESSES_SUCCESS, response));
+
+    dispatch(businessType(MY_SINGLE_BUSINESSES_SUCCESS, response),
+      console.log('======>', response.data),
+      storebusinessId(response.data.id));
   } catch (error) {
     dispatch(businessType(MY_SINGLE_BUSINESSES_ERROR, error.response));
     ErrorResponse(error.response.data.Error);
