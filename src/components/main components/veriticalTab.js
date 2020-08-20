@@ -6,55 +6,22 @@ import { withStyles } from '@material-ui/core/styles';
 import { compose } from 'redux';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-// import Typography from '@material-ui/core/Typography';
-// import Box from '@material-ui/core/Box';
-import TabPanel from './tabPanel';
 import { withRouter, Link } from 'react-router-dom';
+import TabPanel from './tabPanel';
 import LoaderStyles from '../../styles/loaderStyles';
 import VerticalTabStyles from '../../styles/veriticalTab';
 import AllPatients from '../patients/viewPatients';
 
-// const TabPanel = (props) => {
-//   const {
-//     children, value, index, ...other
-//   } = props;
-
-//   return (
-//     <div
-//       role="tabpanel"
-//       hidden={value !== index}
-//       id={`vertical-tabpanel-${index}`}
-//       aria-labelledby={`vertical-tab-${index}`}
-//       {...other}
-//     >
-//       {value === index && (
-//         <Box p={3}>
-//           <Typography>{children}</Typography>
-//         </Box>
-//       )}
-//     </div>
-//   );
-// };
-
-// TabPanel.propTypes = {
-//   children: PropTypes.node,
-//   index: PropTypes.any.isRequired,
-//   value: PropTypes.any.isRequired,
-// };
-
-const a11yProps = (index) => {
-  return {
-    id: `vertical-tab-${index}`,
-    'aria-controls': `vertical-tabpanel-${index}`,
-  };
-};
+const a11yProps = (index) => ({
+  id: `vertical-tab-${index}`,
+  'aria-controls': `vertical-tabpanel-${index}`,
+});
 
 const VerticalTabs = (props) => {
   const classes = VerticalTabStyles();
   const [value, setValue] = React.useState(0);
   const { history } = props;
   const { location } = history;
-  console.log('=====>',location.pathname);
   const { businessId } = localStorage;
   const handleChange = (event, newValue) => {
     props.history.push(newValue);

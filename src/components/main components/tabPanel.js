@@ -14,6 +14,7 @@ const TabPanel = (props) => {
         hidden={value !== index}
         id={`vertical-tabpanel-${index}`}
         aria-labelledby={`vertical-tab-${index}`}
+        // eslint-disable-next-line react/jsx-props-no-spreading
         {...other}
       >
         {value === index && (

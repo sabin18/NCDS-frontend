@@ -2,7 +2,7 @@ import { GET_PATIENT_SUCCESS, GET_PATIENT_ERROR } from './types';
 import backendCall from '../helpers/backendCall';
 import responseComponent from '../components/main components/responseComponent';
 
-const { ErrorResponse, SuccessResponse } = responseComponent;
+const { ErrorResponse } = responseComponent;
 
 const businessType = (type, payload) => ({
   type,

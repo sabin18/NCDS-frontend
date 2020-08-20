@@ -5,7 +5,7 @@ import backendCall from '../helpers/backendCall';
 import { storebusinessId } from '../helpers/authHelpers';
 import responseComponent from '../components/main components/responseComponent';
 
-const { ErrorResponse, SuccessResponse } = responseComponent;
+const { ErrorResponse } = responseComponent;
 
 const businessType = (type, payload) => ({
   type,
