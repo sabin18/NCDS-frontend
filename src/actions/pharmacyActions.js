@@ -35,7 +35,6 @@ export const GetOneMyBusiness = (businessId) => async (dispatch) => {
     const response = res.data;
 
     dispatch(businessType(MY_SINGLE_BUSINESSES_SUCCESS, response),
-      console.log('======>', response.data),
       storebusinessId(response.data.id));
   } catch (error) {
     dispatch(businessType(MY_SINGLE_BUSINESSES_ERROR, error.response));
