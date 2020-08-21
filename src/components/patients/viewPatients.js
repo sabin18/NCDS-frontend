@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { withStyles } from '@material-ui/core/styles';
@@ -8,6 +8,7 @@ import LoaderStyles from '../../styles/loaderStyles';
 import pharmaStyles from '../../styles/pharmacyStyles';
 import { GetAllPatient } from '../../actions/patientsActions';
 import EnhancedTable from './patientsTable';
+import PatientLoader from './patientsLoader';
 
 export class AllPatients extends Component {
    state = {
@@ -22,20 +23,19 @@ export class AllPatients extends Component {
    }
 
    render() {
-     const { classes, patient } = this.props;
+     const { patient } = this.props;
      const { isLoading } = this.state;
      const patientsData = patient && patient.data;
      document.title = 'NCDS -Patients';
      return (
         <div>
-          { patientsData && patientsData && <EnhancedTable data={patientsData} />}
+          {isLoading ? <PatientLoader /> : patientsData && patientsData && <EnhancedTable data={patientsData} />}
         </div>
      );
    }
 }
 
 AllPatients.propTypes = {
-  classes: PropTypes.object,
   GetAllPatient: PropTypes.func,
   patient: PropTypes.object,
   businessId: PropTypes.string,
