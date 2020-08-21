@@ -20,8 +20,9 @@ export class Main extends Component {
   async componentDidMount() {
     const { props } = this;
     const { business } = props;
+    const { businessId } = localStorage;
     this.setState({ isLoading: true, open: true });
-    await props.GetOneMyBusiness(business);
+    await props.GetOneMyBusiness(business || businessId);
     this.setState({ isLoading: false, open: false });
   }
 
@@ -58,4 +59,4 @@ export const mapStateToProps = (state) => ({
   status: state.pharmacy.status,
 });
 
-export default compose(withRouter, connect(mapStateToProps, { GetOneMyBusiness }))(withStyles( LoaderStyles)(Main));
+export default compose(withRouter, connect(mapStateToProps, { GetOneMyBusiness }))(withStyles(LoaderStyles)(Main));

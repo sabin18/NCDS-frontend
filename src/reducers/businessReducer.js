@@ -1,4 +1,6 @@
-import { MYBUSINESSES_SUCCESS, MYBUSINESSES_ERROR, MY_SINGLE_BUSINESSES_SUCCESS, MY_SINGLE_BUSINESSES_ERROR } from '../actions/types';
+import {
+  MYBUSINESSES_SUCCESS, MYBUSINESSES_ERROR, MY_SINGLE_BUSINESSES_SUCCESS, MY_SINGLE_BUSINESSES_ERROR,
+} from '../actions/types';
 
 const initialState = {
   business: null,
@@ -7,7 +9,7 @@ const initialState = {
   singleBusinessError: null,
 };
 
-export default (state = initialState, action) => { 
+export default (state = initialState, action) => {
   switch (action.type) {
     case MYBUSINESSES_SUCCESS:
       return {

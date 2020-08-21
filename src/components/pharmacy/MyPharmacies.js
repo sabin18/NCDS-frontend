@@ -61,7 +61,7 @@ export class AllMypharmacy extends Component {
             )
             : Mypharmacy && Mypharmacy.map((item) => (
              <Link key={item.id} style={{ textDecoration: 'none', color: 'black' }} to={`/dashboard/${item.id}`}>
-            <List >
+            <List>
                 <Divider />
                 <ListItem
                   component="span"

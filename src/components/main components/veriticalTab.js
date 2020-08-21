@@ -1,51 +1,30 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { withStyles } from '@material-ui/core/styles';
+import { compose } from 'redux';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
+import { withRouter, Link } from 'react-router-dom';
+import TabPanel from './tabPanel';
+import LoaderStyles from '../../styles/loaderStyles';
 import VerticalTabStyles from '../../styles/veriticalTab';
-import NotFound from '../NotFound';
+import AllPatients from '../patients/viewPatients';
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
+const a11yProps = (index) => ({
+  id: `vertical-tab-${index}`,
+  'aria-controls': `vertical-tabpanel-${index}`,
+});
 
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`vertical-tabpanel-${index}`}
-      aria-labelledby={`vertical-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
-};
-
-function a11yProps(index) {
-  return {
-    id: `vertical-tab-${index}`,
-    'aria-controls': `vertical-tabpanel-${index}`,
-  };
-}
-
-export default function VerticalTabs() {
+const VerticalTabs = (props) => {
   const classes = VerticalTabStyles();
   const [value, setValue] = React.useState(0);
-
+  const { history } = props;
+  const { location } = history;
+  const { businessId } = localStorage;
   const handleChange = (event, newValue) => {
+    props.history.push(newValue);
     setValue(newValue);
   };
 
@@ -54,36 +33,51 @@ export default function VerticalTabs() {
       <Tabs
         orientation="vertical"
         variant="scrollable"
-        value={value}
+        value={location.pathname}
         onChange={handleChange}
         aria-label="Vertical tabs example"
         className={classes.tabs}
       >
-        <Tab label="Patients" {...a11yProps(0)} />
-        <Tab label=" Medical Records" {...a11yProps(1)} />
-        <Tab label="Medications" {...a11yProps(2)} />
-        <Tab label="Diseases" {...a11yProps(3)} />
-        <Tab label="Pharmacy" {...a11yProps(4)} />
-        <Tab label="Users" {...a11yProps(5)} />
+        <Tab component={Link} label="Patients" to={`/patient/${businessId}`} {...a11yProps(0)} />
+        <Tab component={Link} label=" Medical Records" to="/medicals" {...a11yProps(1)} />
+        <Tab component={Link} label="Medications" to="/medications" {...a11yProps(2)} />
+        <Tab component={Link} label="Diseases" to="/diseases" {...a11yProps(3)} />
+        <Tab component={Link} label="Pharmacy" to="/admin/pharmacy" {...a11yProps(4)} />
+        <Tab component={Link} label="Users" to="/users" {...a11yProps(5)} />
       </Tabs>
-      <TabPanel value={value} index={0}>
-        Patients
+
+      <TabPanel value={location.pathname} index={`/patient/${businessId}`}>
+       <AllPatients businessId={businessId} />
       </TabPanel>
-      <TabPanel value={value} index={1}>
+      <TabPanel value={location.pathname} index="/medicals">
        Medical Records
       </TabPanel>
-      <TabPanel value={value} index={2}>
-       <NotFound />
+      <TabPanel value={location.pathname} index="/medications">
+      Medications
       </TabPanel>
-      <TabPanel value={value} index={3}>
+      <TabPanel value={location.pathname} index="/diseases">
         Diseases
       </TabPanel>
-      <TabPanel value={value} index={4}>
+      <TabPanel value={location.pathname} index="/admin/pharmacy">
         Pharmacy
       </TabPanel>
-      <TabPanel value={value} index={5}>
+      <TabPanel value={location.pathname} index="/users">
         Users
       </TabPanel>
     </div>
   );
-}
+};
+
+VerticalTabs.propTypes = {
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  pathname: PropTypes.string,
+};
+
+export const mapStateToProps = (state) => ({
+  pharmacy: state.pharmacy.singleBusiness,
+  pharmacyError: state.pharmacy.singleBusinessError,
+  status: state.pharmacy.status,
+});
+
+export default compose(withRouter, connect(mapStateToProps, {}))(withStyles(LoaderStyles)(VerticalTabs));

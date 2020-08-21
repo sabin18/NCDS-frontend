@@ -26,7 +26,13 @@ export class App extends Component {
           <Route path="/forgotpassword" component={Authentication} />
           <Route path="/resetpassword/:token" component={Authentication} />
           <Route path="/verify/:token" component={Authentication} />
-          <ProtectedRoute exact path="/pharmacy" component={ AllMypharmacies} />
+          <ProtectedRoute exact path="/pharmacy" component={AllMypharmacies} />
+          <ProtectedRoute exact path="/patient/:businessId" component={Dashboard} />
+          <ProtectedRoute exact path="/medications" component={Dashboard} />
+          <ProtectedRoute exact path="/medicals" component={Dashboard} />
+          <ProtectedRoute exact path="/diseases" component={Dashboard} />
+          <ProtectedRoute exact path="/admin/pharmacy" component={Dashboard} />
+          <ProtectedRoute exact path="/users" component={Dashboard} />
           <ProtectedRoute exact path="*" component={NotFound} />
         </Switch>
         <ToastContainer />
