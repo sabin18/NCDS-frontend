@@ -23,7 +23,10 @@ const headCells = [
     id: 'user', numeric: false, disablePadding: false, label: 'Registed By',
   },
   {
-    id: ' Our Phone', numeric: true, disablePadding: false, label: 'Pharmacist Phone',
+    id: 'Our Phone', numeric: true, disablePadding: false, label: 'Pharmacist Phone',
+  },
+  {
+    id: 'Actions', numeric: true, disablePadding: false, label: 'Actions',
   },
 ];
 

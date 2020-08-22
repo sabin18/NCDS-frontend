@@ -11,6 +11,7 @@ import TabPanel from './tabPanel';
 import LoaderStyles from '../../styles/loaderStyles';
 import VerticalTabStyles from '../../styles/veriticalTab';
 import AllPatients from '../patients/viewPatients';
+import AddMedicalRecords from '../Medical Records/AddMedicalRecord';
 
 const a11yProps = (index) => ({
   id: `vertical-tab-${index}`,
@@ -20,9 +21,10 @@ const a11yProps = (index) => ({
 const VerticalTabs = (props) => {
   const classes = VerticalTabStyles();
   const [value, setValue] = React.useState(0);
-  const { history } = props;
+  const { history, match } = props;
   const { location } = history;
   const { businessId } = localStorage;
+  const { patientId } = match.params;
   const handleChange = (event, newValue) => {
     props.history.push(newValue);
     setValue(newValue);
@@ -39,7 +41,7 @@ const VerticalTabs = (props) => {
         className={classes.tabs}
       >
         <Tab component={Link} label="Patients" to={`/patient/${businessId}`} {...a11yProps(0)} />
-        <Tab component={Link} label=" Medical Records" to="/medicals" {...a11yProps(1)} />
+        <Tab component={Link} label=" Medical Records" to="/medications" {...a11yProps(1)} />
         <Tab component={Link} label="Medications" to="/medications" {...a11yProps(2)} />
         <Tab component={Link} label="Diseases" to="/diseases" {...a11yProps(3)} />
         <Tab component={Link} label="Pharmacy" to="/admin/pharmacy" {...a11yProps(4)} />
@@ -49,8 +51,8 @@ const VerticalTabs = (props) => {
       <TabPanel value={location.pathname} index={`/patient/${businessId}`}>
        <AllPatients businessId={businessId} />
       </TabPanel>
-      <TabPanel value={location.pathname} index="/medicals">
-       Medical Records
+      <TabPanel value={location.pathname} index={`/patient/${businessId}/${patientId}`}>
+      <AddMedicalRecords />
       </TabPanel>
       <TabPanel value={location.pathname} index="/medications">
       Medications

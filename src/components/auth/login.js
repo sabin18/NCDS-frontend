@@ -42,7 +42,6 @@ export class SignIn extends Component {
      };
      this.setState({ isLoading: true, open: true });
      const { userLogin: login } = this.props;
-     await isOnline();
      await login(credentials);
      this.setState({
        isLoading: false, open: false, email: '', password: '',
