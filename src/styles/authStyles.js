@@ -1,11 +1,12 @@
 import { blue } from '@material-ui/core/colors';
+// import img from '../assets/images/pharmacy.jpg';
 
 const authStyles = (theme) => ({
   root: {
     height: '100vh',
   },
   image: {
-    backgroundImage: 'url(../../assets/images/GettyImages.jpg)',
+    backgroundImage: 'url(/src/assets/images/pharmacist.jpg)',
     backgroundRepeat: 'no-repeat',
     backgroundColor:
           theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],

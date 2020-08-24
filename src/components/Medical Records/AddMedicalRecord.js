@@ -10,6 +10,10 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import SaveIcon from '@material-ui/icons/Save';
+import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
+import Divider from '@material-ui/core/Divider';
 import LoaderStyles from '../../styles/loaderStyles';
 import addMedicalStyles from '../../styles/addMedicalRecordStyles';
 import { GetSinglePatient } from '../../actions/patientsActions';
@@ -19,24 +23,69 @@ import { GetAllMedications } from '../../actions/medicationActions';
 export class AddMedicalRecords extends Component {
    state = {
      isLoading: false,
+     medicalData: [{
+       patientId: '',
+       quantity: '',
+       disease: '',
+       medication: '',
+       quantityType: '',
+       expiryDate: '',
+     }],
+     medicalRecords: [],
    };
 
    async componentDidMount() {
-     const { props } = this;
+     const { props, state } = this;
      const { match } = props;
+     const { medicalData } = state;
      const { patientId, businessId } = match.params;
      this.setState({ isLoading: true });
      await props.GetSinglePatient(businessId, patientId);
      await props.GetAllDiseases();
      await props.GetAllMedications();
+     this.setState({ medicalRecords: medicalData });
      this.setState({ isLoading: false });
+   }
+
+   addNewRecord = async () => {
+     const { medicalRecords } = this.state;
+     const medicalData = [{
+       patientId: '',
+       quantity: '',
+       disease: '',
+       medication: '',
+       quantityType: '',
+       expiryDate: '',
+     }];
+
+     await this.setState({
+       medicalRecords: medicalRecords.concat(medicalData),
+     });
+   }
+
+   removeRecord = async (key) => {
+     const { medicalRecords } = this.state;
+     const newRecord = medicalRecords;
+     const remainingRecords = await newRecord.splice(key, 1);
+     this.setState({
+       medicalRecords: newRecord,
+     });
+   }
+
+   handleMedicalRecordChange(e) {
+     e.preventDefault();
+     const keys = e.target.id.split('-');
+     const temp = this.state.medicalRecords;
+     temp[parseInt(keys[1])][keys[0]] = e.target.value;
+     //  console.log('value========>', e.target.value);
+     this.setState({ medicalRecords: temp });
    }
 
    render() {
      const {
        singlePatient, diseases, medications, classes,
      } = this.props;
-     const { isLoading } = this.state;
+     const { isLoading, medicalRecords } = this.state;
      const patientData = singlePatient && singlePatient.data;
      const diseasesData = diseases && diseases.data;
      const medicationsData = medications && medications.data;
@@ -45,17 +94,18 @@ export class AddMedicalRecords extends Component {
 
      document.title = 'NCDS -Patients';
      return (
-       <div ClassName={classes.addPatientContiner}>
+       <div className={classes.Recordform}>
           { patientData
          && (
         <form className={classes.root} noValidate autoComplete="on">
-              <Typography variant="h3" gutterBottom>
-                Create Medical Record for this Patient
+              <Typography variant="h5" gutterBottom className={classes.formTitle}>
+                CREATE MEDICAL RECORD FOR THIS PATIENT
+                <Divider />
+              </Typography>
+              <Typography variant="button" gutterBottom>
+                <b>PATIENT DETAILS</b>
               </Typography>
               <div>
-              <Typography variant="h6" gutterBottom>
-                PATIENT DETAILS
-              </Typography>
                 <TextField
                   id="standard-read-only-input"
                   label="firstName"
@@ -81,43 +131,66 @@ export class AddMedicalRecords extends Component {
                   }}
                 />
               </div>
-              <Typography variant="h6" gutterBottom>
-                ADD MEDICAL DETAILS
+              <Typography variant="button" gutterBottom>
+              <b>ADD MEDICATION DETAILS</b>
               </Typography>
-              <div styles={{ display: 'inlineBlock' }}>
+              {console.log('========>', medicalRecords)}
+              {medicalRecords && medicalRecords.map((record, index) => (
+              <div className={classes.addPatientContiner} key={record.id}>
+              <Tooltip title="Remove Medication">
+                  <IconButton
+                    aria-label="Remove Medication"
+                    onClick={() => this.removeRecord(index)}
+                  >
+                  <DeleteIcon />
+                  </IconButton>
+              </Tooltip>
               <Autocomplete
-                id="auto-highlight"
                 autoHighlight
+                Value={record.disease && record.disease}
+                name={`disease-${index}`}
+                id={`disease-${index}`}
                 options={diseasesList && diseasesList}
-                style={{ width: 300 }}
+                onInputChange={(e) => this.handleMedicalRecordChange(e)}
                 renderInput={(params) => <TextField {...params} label="Select Disease" />}
               />
               <Autocomplete
-                id="auto-highlight"
                 autoHighlight
+                value={record.medication}
+                name={`medication-${index}`}
+                id={`medication-${index}`}
                 options={medicationsList && medicationsList}
-                style={{ width: 300 }}
+                onSelect={(e) => this.handleMedicalRecordChange(e)}
                 renderInput={(params) => <TextField {...params} label="Select Medication" />}
               />
               <TextField
                 id="standard-number"
                 label="Quantity"
                 type="number"
+                value={record.quantity}
+                onChange={(e) => this.handleMedicalRecordChange(e)}
+                name={`quantity-${index}`}
+                id={`quantity-${index}`}
                 InputLabelProps={{
                   shrink: true,
                 }}
               />
               <Autocomplete
-                id="auto-highlight"
                 autoHighlight
+                value={record.quantityType}
+                name={`quantityType-${index}`}
+                id={`quantityType-${index}`}
                 options={['Tablets(Tbs)', 'Flacons(FI)', 'Tubes(Tbes)', 'Pieces(Pces)']}
-                style={{ width: 300 }}
+                onSelect={(e) => this.handleMedicalRecordChange(e)}
                 renderInput={(params) => <TextField {...params} label="Quantity Types" />}
               />
               <TextField
-                id="date"
                 label="ExpiryDate"
                 type="date"
+                value={record.expiryDate}
+                onChange={(e) => this.handleMedicalRecordChange(e)}
+                name={`expiryDate-${index}`}
+                id={`expiryDate-${index}`}
                 defaultValue={new Date()}
                 className={classes.textField}
                 InputLabelProps={{
@@ -125,15 +198,18 @@ export class AddMedicalRecords extends Component {
                 }}
               />
               </div>
+              ))}
               <Button
                 variant="contained"
                 color="default"
                 className={classes.button}
                 startIcon={<AddIcon />}
+                onClick={() => this.addNewRecord()}
               >
                 Add New Medication
               </Button>
               <Button
+                style={{ left: '920px' }}
                 variant="contained"
                 color="primary"
                 size="large"
