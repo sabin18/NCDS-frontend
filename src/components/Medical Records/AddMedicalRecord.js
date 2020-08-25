@@ -77,7 +77,6 @@ export class AddMedicalRecords extends Component {
      const keys = e.target.id.split('-');
      const temp = this.state.medicalRecords;
      temp[parseInt(keys[1])][keys[0]] = e.target.value;
-     //  console.log('value========>', e.target.value);
      this.setState({ medicalRecords: temp });
    }
 
@@ -134,7 +133,6 @@ export class AddMedicalRecords extends Component {
               <Typography variant="button" gutterBottom>
               <b>ADD MEDICATION DETAILS</b>
               </Typography>
-              {console.log('========>', medicalRecords)}
               {medicalRecords && medicalRecords.map((record, index) => (
               <div className={classes.addPatientContiner} key={record.id}>
               <Tooltip title="Remove Medication">
@@ -147,11 +145,11 @@ export class AddMedicalRecords extends Component {
               </Tooltip>
               <Autocomplete
                 autoHighlight
-                Value={record.disease && record.disease}
-                name={`disease-${index}`}
                 id={`disease-${index}`}
+                value={record.disease}
+                name={`disease-${index}`}
                 options={diseasesList && diseasesList}
-                onInputChange={(e) => this.handleMedicalRecordChange(e)}
+                onSelect={(e) => this.handleMedicalRecordChange(e)}
                 renderInput={(params) => <TextField {...params} label="Select Disease" />}
               />
               <Autocomplete
