@@ -19,7 +19,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import authStyles from '../../styles/authStyles';
 import Copyright from '../copyright';
 import { userLogin } from '../../actions/authActions';
-import isOnline from '../../helpers/checkInternet';
+// import isOnline from '../../helpers/checkInternet';
 
 export class SignIn extends Component {
    state = {
@@ -42,7 +42,6 @@ export class SignIn extends Component {
      };
      this.setState({ isLoading: true, open: true });
      const { userLogin: login } = this.props;
-     await isOnline();
      await login(credentials);
      this.setState({
        isLoading: false, open: false, email: '', password: '',
@@ -58,7 +57,7 @@ export class SignIn extends Component {
    };
 
    render() {
-     const { classes, data, history} = this.props;
+     const { classes, data, history } = this.props;
      const {
        password, email, isLoading, open,
      } = this.state;

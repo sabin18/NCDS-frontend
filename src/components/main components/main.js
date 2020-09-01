@@ -26,6 +26,10 @@ export class Main extends Component {
     this.setState({ isLoading: false, open: false });
   }
 
+  handleClose = () => {
+    this.setState({ open: false, isLoading: false });
+  };
+
   render() {
     const { classes } = this.props;
     const { isLoading, open } = this.state;

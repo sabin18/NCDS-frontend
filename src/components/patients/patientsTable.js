@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter, Link } from 'react-router-dom';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -10,6 +11,11 @@ import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
+import Tooltip from '@material-ui/core/Tooltip';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import IconButton from '@material-ui/core/IconButton';
+import PostAddIcon from '@material-ui/icons/PostAdd';
+import EditIcon from '@material-ui/icons/Edit';
 import TableStyles from '../../styles/patientsTableStyles';
 import EnhancedTableHead from './EnhancedTableHead';
 import EnhancedTableToolbar from './EnhancedTableToolbar';
@@ -41,6 +47,7 @@ const stableSort = (array, comparator) => {
 // table component
 const EnhancedTable = (props) => {
   const { data } = props;
+  const { businessId } = localStorage;
   const rows = data;
   const classes = TableStyles();
   const [order, setOrder] = React.useState('asc');
@@ -157,6 +164,22 @@ const EnhancedTable = (props) => {
                         {row.users.lastName}
                       </TableCell>
                       <TableCell align="right">{row.users.phoneNumber}</TableCell>
+                      <TableCell align="right">
+                      <ButtonGroup>
+                      <Link to={`/patient/${businessId}/${row.id}`}>
+                      <Tooltip title="Add Medical Record">
+                                  <IconButton aria-label="delete">
+                                    <PostAddIcon />
+                                  </IconButton>
+                      </Tooltip>
+                      </Link>
+                      <Tooltip title="Edit">
+                                  <IconButton aria-label="delete">
+                                    <EditIcon />
+                                  </IconButton>
+                      </Tooltip>
+                      </ButtonGroup>
+                      </TableCell>
                     </TableRow>
                   );
                 })}
