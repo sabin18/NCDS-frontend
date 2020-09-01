@@ -51,7 +51,7 @@ module.exports = {
       template: './src/index.html',
     }),
     new webpack.DefinePlugin({
-      PRODUCTION_API: JSON.stringify('https://caret-bn-backend-staging.herokuapp.com/api/v1/'),
+      PRODUCTION_API: JSON.stringify('https://ncds-backend.herokuapp.com/api/v1/'),
     }),
     new webpack.DefinePlugin({
       DEVELOPMENT_API: JSON.stringify('http://localhost:3000/api/v1/'),

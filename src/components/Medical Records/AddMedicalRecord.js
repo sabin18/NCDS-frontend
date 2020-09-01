@@ -19,44 +19,53 @@ import addMedicalStyles from '../../styles/addMedicalRecordStyles';
 import { GetSinglePatient } from '../../actions/patientsActions';
 import { GetAllDiseases } from '../../actions/diseasesActions';
 import { GetAllMedications } from '../../actions/medicationActions';
+import { createMedicalRecord } from '../../actions/medicationRecordActions';
+import FormLoader from '../main components/formLoader';
+import Loader from '../main components/loader';
 
 export class AddMedicalRecords extends Component {
    state = {
      isLoading: false,
-     medicalData: [{
-       patientId: '',
-       quantity: '',
-       disease: '',
-       medication: '',
-       quantityType: '',
-       expiryDate: '',
-     }],
+     open: false,
      medicalRecords: [],
    };
 
    async componentDidMount() {
-     const { props, state } = this;
+     const { props } = this;
      const { match } = props;
-     const { medicalData } = state;
      const { patientId, businessId } = match.params;
      this.setState({ isLoading: true });
      await props.GetSinglePatient(businessId, patientId);
      await props.GetAllDiseases();
      await props.GetAllMedications();
-     this.setState({ medicalRecords: medicalData });
-     this.setState({ isLoading: false });
-   }
-
-   addNewRecord = async () => {
-     const { medicalRecords } = this.state;
      const medicalData = [{
-       patientId: '',
+       patient: patientId,
        quantity: '',
        disease: '',
        medication: '',
        quantityType: '',
        expiryDate: '',
      }];
+     this.setState({ medicalRecords: medicalData });
+     this.setState({ isLoading: false });
+   }
+
+   handleClose = () => {
+     this.setState({ open: false, isLoading: false });
+   };
+
+   addNewRecord = async () => {
+     const { medicalRecords } = this.state;
+     const { match } = this.props;
+     const { patientId } = match.params;
+     const medicalData = {
+       patient: patientId,
+       quantity: '',
+       disease: '',
+       medication: '',
+       quantityType: '',
+       expiryDate: '',
+     };
 
      await this.setState({
        medicalRecords: medicalRecords.concat(medicalData),
@@ -66,11 +75,31 @@ export class AddMedicalRecords extends Component {
    removeRecord = async (key) => {
      const { medicalRecords } = this.state;
      const newRecord = medicalRecords;
-     const remainingRecords = await newRecord.splice(key, 1);
+     await newRecord.splice(key, 1);
      this.setState({
        medicalRecords: newRecord,
      });
    }
+
+   handleSubmit = async (e) => {
+     e.preventDefault();
+     const { medicalRecords } = this.state;
+     this.setState({ open: true });
+     const { createMedicalRecord, match } = this.props;
+     const { businessId, patientId } = match.params;
+     const medicalData = [{
+       patient: patientId,
+       quantity: '',
+       disease: '',
+       medication: '',
+       quantityType: '',
+       expiryDate: '',
+     }];
+     await createMedicalRecord(businessId, medicalRecords);
+     this.setState({
+       open: false, medicalRecords: medicalData,
+     });
+   };
 
    handleMedicalRecordChange(e) {
      e.preventDefault();
@@ -84,7 +113,7 @@ export class AddMedicalRecords extends Component {
      const {
        singlePatient, diseases, medications, classes,
      } = this.props;
-     const { isLoading, medicalRecords } = this.state;
+     const { isLoading, medicalRecords, open } = this.state;
      const patientData = singlePatient && singlePatient.data;
      const diseasesData = diseases && diseases.data;
      const medicationsData = medications && medications.data;
@@ -94,13 +123,13 @@ export class AddMedicalRecords extends Component {
      document.title = 'NCDS -Patients';
      return (
        <div className={classes.Recordform}>
-          { patientData
+          {isLoading ? <FormLoader /> : patientData
          && (
-        <form className={classes.root} noValidate autoComplete="on">
+        <form className={classes.root} noValidate autoComplete="on" onSubmit={this.handleSubmit}>
               <Typography variant="h5" gutterBottom className={classes.formTitle}>
                 CREATE MEDICAL RECORD FOR THIS PATIENT
-                <Divider />
               </Typography>
+              <Divider className={classes.diver} />
               <Typography variant="button" gutterBottom>
                 <b>PATIENT DETAILS</b>
               </Typography>
@@ -206,16 +235,26 @@ export class AddMedicalRecords extends Component {
               >
                 Add New Medication
               </Button>
+
               <Button
+                type="submit"
                 style={{ left: '920px' }}
                 variant="contained"
                 color="primary"
                 size="large"
+                disabled={open}
                 className={classes.button}
                 startIcon={<SaveIcon />}
               >
-                Save
+               {open ? (
+                <Loader
+                  classes={classes}
+                  onclick={this.handleClose}
+                  open={open}
+                />
+               ) : 'Save' }
               </Button>
+
         </form>
          )}
        </div>
@@ -228,6 +267,7 @@ AddMedicalRecords.propTypes = {
   GetAllMedications: PropTypes.func,
   GetAllDiseases: PropTypes.func,
   singlePatient: PropTypes.object,
+  createmedicalRecord: PropTypes.object,
   medications: PropTypes.object,
   diseases: PropTypes.object,
   businessId: PropTypes.string,
@@ -242,6 +282,10 @@ export const mapStateToProps = (state) => ({
   diseasesError: state.disease.diseasesError,
   medications: state.medication.medications,
   medicationsError: state.medication.medicationsError,
+  records: state.record.record,
+  recordsError: state.record.recordError,
 });
 
-export default compose(withRouter, connect(mapStateToProps, { GetSinglePatient, GetAllDiseases, GetAllMedications }))(withStyles(addMedicalStyles)(AddMedicalRecords));
+export default compose(withRouter, connect(mapStateToProps, {
+  GetSinglePatient, GetAllDiseases, GetAllMedications, createMedicalRecord,
+}))(withStyles(addMedicalStyles, LoaderStyles)(AddMedicalRecords));

@@ -20,8 +20,12 @@ const addMedicalStyles = (theme) => ({
     backgroundColor: '#FDFDFD',
   },
   formTitle: {
-    paddingBottom: '15px',
     justifyContent: 'center',
+    paddingLeft: '22rem',
+  },
+
+  diver: {
+    marginBottom: '15px',
   },
 
 });
