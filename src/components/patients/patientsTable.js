@@ -43,10 +43,15 @@ const stableSort = (array, comparator) => {
   });
   return stabilizedThis.map((el) => el[0]);
 };
+const searching = (search) => (x) => x.phone.toLowerCase().includes(search.toLowerCase())
+|| x.firstName.toLowerCase().includes(search.toLowerCase())
+|| x.lastName.toLowerCase().includes(search.toLowerCase())
+|| !search;
 
 // table component
 const EnhancedTable = (props) => {
-  const { data } = props;
+  const { data, search, handleSearch } = props;
+  console.log('=====>', search)
   const { businessId } = localStorage;
   const rows = data;
   const classes = TableStyles();
@@ -112,7 +117,7 @@ const EnhancedTable = (props) => {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar numSelected={selected.length} handleSearch={handleSearch} search={search} />
         <TableContainer>
           <Table
             className={classes.table}
@@ -132,7 +137,7 @@ const EnhancedTable = (props) => {
             <TableBody>
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
+                .filter(searching(search)).map((row, index) => {
                   const isItemSelected = isSelected(row.id);
                   const labelId = `enhanced-table-checkbox-${index}`;
 

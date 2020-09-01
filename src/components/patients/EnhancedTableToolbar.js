@@ -4,14 +4,17 @@ import clsx from 'clsx';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
+import InputBase from '@material-ui/core/InputBase';
+import SearchIcon from '@material-ui/icons/Search';
 import DeleteIcon from '@material-ui/icons/Delete';
+import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import Tooltip from '@material-ui/core/Tooltip';
 import useToolbarStyles from '../../styles/enhancedTableToolbar';
 
 const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles();
-  const { numSelected } = props;
+  const { numSelected, search, handleSearch } = props;
 
   return (
       <Toolbar
@@ -30,7 +33,22 @@ const EnhancedTableToolbar = (props) => {
             Patients
           </Typography>
         )}
-
+          <div className={classes.search}>
+            <div className={classes.searchIcon}>
+              <SearchIcon />
+            </div>
+            <InputBase
+              placeholder="Search Patient …"
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+              value={search}
+              onChange={handleSearch}
+              inputProps={{ 'aria-label': 'search' }}
+            />
+          </div>
+          {<GroupAddIcon />}
         {numSelected > 0 ? (
           <Tooltip title="Delete">
             <IconButton aria-label="delete">
