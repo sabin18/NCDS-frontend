@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -51,7 +51,6 @@ const searching = (search) => (x) => x.phone.toLowerCase().includes(search.toLow
 // table component
 const EnhancedTable = (props) => {
   const { data, search, handleSearch } = props;
-  console.log('=====>', search)
   const { businessId } = localStorage;
   const rows = data;
   const classes = TableStyles();
@@ -179,7 +178,7 @@ const EnhancedTable = (props) => {
                       </Tooltip>
                       </Link>
                       <Tooltip title="Edit">
-                                  <IconButton aria-label="delete">
+                                  <IconButton aria-label="Edit">
                                     <EditIcon />
                                   </IconButton>
                       </Tooltip>
@@ -217,4 +216,6 @@ export default EnhancedTable;
 
 EnhancedTable.propTypes = {
   data: PropTypes.object,
+  search: PropTypes.string,
+  handleSearch: PropTypes.func,
 };

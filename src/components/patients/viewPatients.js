@@ -23,12 +23,9 @@ export class AllPatients extends Component {
      this.setState({ isLoading: false });
    }
 
-  
-
    handleSearch = (e) => {
      e.preventDefault();
      const { value } = e.target;
-     console.log('valuee===>', value);
      this.setState({ search: value });
    };
 
@@ -47,7 +44,7 @@ export class AllPatients extends Component {
             searching={this.searching}
             handleSearch={this.handleSearch}
           />
-          )} 
+          )}
         </div>
      );
    }
