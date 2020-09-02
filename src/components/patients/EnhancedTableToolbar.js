@@ -4,14 +4,17 @@ import clsx from 'clsx';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
+import InputBase from '@material-ui/core/InputBase';
+import SearchIcon from '@material-ui/icons/Search';
 import DeleteIcon from '@material-ui/icons/Delete';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import Tooltip from '@material-ui/core/Tooltip';
 import useToolbarStyles from '../../styles/enhancedTableToolbar';
 
 const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles();
-  const { numSelected } = props;
+  const { numSelected, search, handleSearch } = props;
 
   return (
       <Toolbar
@@ -30,7 +33,34 @@ const EnhancedTableToolbar = (props) => {
             Patients
           </Typography>
         )}
-
+        {numSelected > 0 ? (
+          ''
+        ) : (
+          <div className={classes.search}>
+            <div className={classes.searchIcon}>
+              <SearchIcon />
+            </div>
+            <InputBase
+              placeholder="Search Patient …"
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+              value={search}
+              onChange={handleSearch}
+              inputProps={{ 'aria-label': 'search' }}
+            />
+          </div>
+        )}
+          {numSelected > 0 ? (
+            ''
+          ) : (
+          <Tooltip title="Add new patient">
+            <IconButton aria-label="Add new patient">
+            <PersonAddIcon />
+            </IconButton>
+          </Tooltip>
+          )}
         {numSelected > 0 ? (
           <Tooltip title="Delete">
             <IconButton aria-label="delete">
@@ -50,6 +80,8 @@ const EnhancedTableToolbar = (props) => {
 
 EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
+  search: PropTypes.string,
+  handleSearch: PropTypes.func,
 };
 
 export default EnhancedTableToolbar;

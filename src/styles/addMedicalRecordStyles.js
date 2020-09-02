@@ -1,5 +1,3 @@
-import { makeStyles } from '@material-ui/core/styles';
-
 const addMedicalStyles = (theme) => ({
   root: {
     '& .MuiTextField-root': {

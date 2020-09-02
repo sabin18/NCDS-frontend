@@ -13,6 +13,7 @@ import PatientLoader from './patientsLoader';
 export class AllPatients extends Component {
    state = {
      isLoading: false,
+     search: '',
    };
 
    async componentDidMount() {
@@ -22,14 +23,28 @@ export class AllPatients extends Component {
      this.setState({ isLoading: false });
    }
 
+   handleSearch = (e) => {
+     e.preventDefault();
+     const { value } = e.target;
+     this.setState({ search: value });
+   };
+
    render() {
      const { patient } = this.props;
-     const { isLoading } = this.state;
+     const { isLoading, search } = this.state;
      const patientsData = patient && patient.data;
      document.title = 'NCDS -Patients';
      return (
         <div>
-          {isLoading ? <PatientLoader /> : patientsData && patientsData && <EnhancedTable data={patientsData} />}
+          {isLoading ? <PatientLoader /> : patientsData && patientsData
+          && (
+          <EnhancedTable
+            data={patientsData}
+            search={search}
+            searching={this.searching}
+            handleSearch={this.handleSearch}
+          />
+          )}
         </div>
      );
    }
