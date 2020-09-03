@@ -17,6 +17,7 @@ import TabPanel from './tabPanel';
 import LoaderStyles from '../../styles/loaderStyles';
 import VerticalTabStyles from '../../styles/veriticalTab';
 import AllPatients from '../patients/viewPatients';
+import AddPatient from '../patients/addPatient';
 import AddMedicalRecords from '../Medical Records/AddMedicalRecord';
 
 const a11yProps = (index) => ({
@@ -46,7 +47,7 @@ const VerticalTabs = (props) => {
         aria-label="Vertical tabs example"
         className={classes.tabs}
       >
-        <Tab icon={<PeopleIcon />} component={Link} label="Patients" to={`/patient/${businessId}`} {...a11yProps(0)} />
+        <Tab icon={<PeopleIcon />} component={Link} label="Patients" to={`/patients/${businessId}`} {...a11yProps(0)} />
         <Tab icon={<AssignmentIcon />} component={Link} label=" Medical Records" to="/medications" {...a11yProps(1)} />
         <Tab icon={<LocalHospitalIcon />} component={Link} label="Medications" to="/medications" {...a11yProps(2)} />
         <Tab icon={<ReportProblemIcon />} component={Link} label="Diseases" to="/diseases" {...a11yProps(3)} />
@@ -54,11 +55,14 @@ const VerticalTabs = (props) => {
         <Tab icon={<GroupAddIcon />} component={Link} label="Users" to="/users" {...a11yProps(5)} />
       </Tabs>
 
-      <TabPanel value={location.pathname} index={`/patient/${businessId}`}>
+      <TabPanel value={location.pathname} index={`/patients/${businessId}`}>
        <AllPatients businessId={businessId} />
       </TabPanel>
       <TabPanel value={location.pathname} index={`/patient/${businessId}/${patientId}`}>
       <AddMedicalRecords />
+      </TabPanel>
+      <TabPanel value={location.pathname} index={`/patient/${businessId}`}>
+      <AddPatient />
       </TabPanel>
       <TabPanel value={location.pathname} index="/medications">
       Medications

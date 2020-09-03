@@ -1,8 +1,8 @@
-import { GET_PATIENT_SUCCESS, GET_PATIENT_ERROR, GET_SINGLE_PATIENT_SUCCESS, GET_SINGLE_PATIENT_ERROR } from './types';
+import { GET_PATIENT_SUCCESS, GET_PATIENT_ERROR, GET_SINGLE_PATIENT_SUCCESS, GET_SINGLE_PATIENT_ERROR, ADD_PATIENT_SUCCESS, ADD_PATIENT_ERROR } from './types';
 import backendCall from '../helpers/backendCall';
 import responseComponent from '../components/main components/responseComponent';
 
-const { ErrorResponse } = responseComponent;
+const { ErrorResponse, SuccessResponse } = responseComponent;
 
 const businessType = (type, payload) => ({
   type,
@@ -37,4 +37,18 @@ export const GetSinglePatient = (businessId, patientId) => async (dispatch) => {
   }
 };
 
-export default { GetAllPatient, GetSinglePatient };
+export const AddNewPatient = (businessId, patientData) => async (dispatch) => {
+  const { token } = localStorage;
+  const AuthUser = 'Bearer '.concat(token);
+  try {
+    const res = await backendCall.post(`/patients/${businessId}`, patientData, { headers: { Authorization: AuthUser } });
+    const response = res.data;
+    dispatch(businessType(ADD_PATIENT_SUCCESS, response),
+      SuccessResponse(response));
+  } catch (error) {
+    dispatch(businessType(ADD_PATIENT_ERROR, error.response));
+    ErrorResponse(error.response.data.Error);
+  }
+};
+
+export default { AddNewPatient };

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import { Link } from 'react-router-dom';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
@@ -15,7 +16,7 @@ import useToolbarStyles from '../../styles/enhancedTableToolbar';
 const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles();
   const { numSelected, search, handleSearch } = props;
-
+  const { businessId } = localStorage;
   return (
       <Toolbar
         className={clsx(classes.root, {
@@ -55,11 +56,13 @@ const EnhancedTableToolbar = (props) => {
           {numSelected > 0 ? (
             ''
           ) : (
+          <Link to={`/patient/${businessId}`}>
           <Tooltip title="Add new patient">
             <IconButton aria-label="Add new patient">
             <PersonAddIcon />
             </IconButton>
           </Tooltip>
+          </Link>
           )}
         {numSelected > 0 ? (
           <Tooltip title="Delete">
