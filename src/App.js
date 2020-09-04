@@ -28,6 +28,7 @@ export class App extends Component {
           <Route path="/verify/:token" component={Authentication} />
           <ProtectedRoute exact path="/pharmacy" component={AllMypharmacies} />
           <ProtectedRoute exact path="/patient/:businessId/:patientId" component={Dashboard} />
+          <ProtectedRoute exact path="/patients/:businessId" component={Dashboard} />
           <ProtectedRoute exact path="/patient/:businessId" component={Dashboard} />
           <ProtectedRoute exact path="/medications" component={Dashboard} />
           <ProtectedRoute exact path="/medicals" component={Dashboard} />
