@@ -23,20 +23,6 @@ export const GetAllUsers = () => async (dispatch) => {
   }
 };
 
-// export const GetSinglePatient = (businessId, patientId) => async (dispatch) => {
-//   const { token } = localStorage;
-//   const AuthUser = 'Bearer '.concat(token);
-
-//   try {
-//     const res = await backendCall.get(`/patients/${businessId}/${patientId}`, { headers: { Authorization: AuthUser } });
-//     const response = res.data;
-//     dispatch(businessType(GET_SINGLE_PATIENT_SUCCESS, response));
-//   } catch (error) {
-//     dispatch(businessType(GET_SINGLE_PATIENT_ERROR, error.response));
-//     ErrorResponse(error.response.data.Error);
-//   }
-// };
-
 export const AddNewUser = (userData) => async (dispatch) => {
   const { token } = localStorage;
   const AuthUser = 'Bearer '.concat(token);
