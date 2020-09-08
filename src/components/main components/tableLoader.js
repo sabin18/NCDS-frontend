@@ -1,7 +1,7 @@
 import React from 'react';
 import ContentLoader from 'react-content-loader';
 
-export const PatientLoader = () => (
+export const TableLoader = () => (
     <ContentLoader
       speed={2}
       width={1000}
@@ -64,4 +64,4 @@ export const PatientLoader = () => (
     </ContentLoader>
 );
 
-export default PatientLoader;
+export default TableLoader;

@@ -8,6 +8,11 @@ const addPatientStyles = (theme) => ({
 
   addPatientContiner: {
     paddingLeft: '12px',
+    display: 'flex',
+  },
+
+  addUserContiner: {
+    display: 'flex',
   },
 
   addPatientButton: {

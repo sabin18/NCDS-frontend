@@ -10,6 +10,7 @@ import VerticalTabs from './veriticalTab';
 import PrimarySearchAppBar from './menu';
 import LoaderStyles from '../../styles/loaderStyles';
 import { GetOneMyBusiness } from '../../actions/pharmacyActions';
+import { checkAdmin } from '../../helpers/authHelpers';
 
 export class Main extends Component {
   state = {
@@ -22,7 +23,7 @@ export class Main extends Component {
     const { business } = props;
     const { businessId } = localStorage;
     this.setState({ isLoading: true, open: true });
-    await props.GetOneMyBusiness(business || businessId);
+    !checkAdmin() ? await props.GetOneMyBusiness(business || businessId) : '';
     this.setState({ isLoading: false, open: false });
   }
 

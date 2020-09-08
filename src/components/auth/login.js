@@ -19,7 +19,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import authStyles from '../../styles/authStyles';
 import Copyright from '../copyright';
 import { userLogin } from '../../actions/authActions';
-// import isOnline from '../../helpers/checkInternet';
+import { checkAdmin } from '../../helpers/authHelpers';
 
 export class SignIn extends Component {
    state = {
@@ -73,7 +73,7 @@ export class SignIn extends Component {
        <CircularProgress className={classes.buttonProgress} />
         </Backdrop>
          )}
-          {data && data.message && history.push('/pharmacy')}
+          {checkAdmin() ? data && data.message && history.push('/dashboard') : data && data.message && history.push('/pharmacy')}
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>

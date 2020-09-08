@@ -19,6 +19,8 @@ import VerticalTabStyles from '../../styles/veriticalTab';
 import AllPatients from '../patients/viewPatients';
 import AddPatient from '../patients/addPatient';
 import AddMedicalRecords from '../Medical Records/AddMedicalRecord';
+import AllUsers from '../users/viewUsers';
+import AddUser from '../users/addUser'
 
 const a11yProps = (index) => ({
   id: `vertical-tab-${index}`,
@@ -74,7 +76,10 @@ const VerticalTabs = (props) => {
         Pharmacy
       </TabPanel>
       <TabPanel value={location.pathname} index="/users">
-        Users
+      <AllUsers />
+      </TabPanel>
+      <TabPanel value={location.pathname} index="/admin/users">
+      <AddUser /> 
       </TabPanel>
     </div>
   );
