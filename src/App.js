@@ -22,6 +22,8 @@ export class App extends Component {
       <Router>
         <Switch>
           <ProtectedRoute exact path="/dashboard/:businessId" component={Dashboard} />
+          <ProtectedRoute exact path="/dashboard" component={Dashboard} />
+          <ProtectedRoute exact path="/admin/users" component={Dashboard} />
           <Route path="/login" component={Authentication} />
           <Route path="/forgotpassword" component={Authentication} />
           <Route path="/resetpassword/:token" component={Authentication} />

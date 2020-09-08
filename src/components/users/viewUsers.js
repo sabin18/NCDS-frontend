@@ -6,11 +6,11 @@ import { compose } from 'redux';
 import { withStyles } from '@material-ui/core/styles';
 import LoaderStyles from '../../styles/loaderStyles';
 import pharmaStyles from '../../styles/pharmacyStyles';
-import { GetAllPatient } from '../../actions/patientsActions';
-import EnhancedTable from './patientsTable';
+import { GetAllUsers } from '../../actions/usersAction';
+import EnhancedTable from './usersTable';
 import TableLoader from '../main components/tableLoader';
 
-export class AllPatients extends Component {
+export class AllUsers extends Component {
    state = {
      isLoading: false,
      search: '',
@@ -19,7 +19,7 @@ export class AllPatients extends Component {
    async componentDidMount() {
      const { props } = this;
      this.setState({ isLoading: true });
-     await props.GetAllPatient(props.businessId);
+     await props.GetAllUsers(props.businessId);
      this.setState({ isLoading: false });
    }
 
@@ -30,16 +30,16 @@ export class AllPatients extends Component {
    };
 
    render() {
-     const { patient } = this.props;
+     const { users } = this.props;
      const { isLoading, search } = this.state;
-     const patientsData = patient && patient.data;
-     document.title = 'NCDS -Patients';
+     const usersData = users && users.data;
+     document.title = 'NCDS -users';
      return (
         <div>
-          {isLoading ? <TableLoader /> : patientsData && patientsData
+          {isLoading ? <TableLoader /> : usersData && usersData
           && (
           <EnhancedTable
-            data={patientsData}
+            data={usersData}
             search={search}
             searching={this.searching}
             handleSearch={this.handleSearch}
@@ -50,16 +50,16 @@ export class AllPatients extends Component {
    }
 }
 
-AllPatients.propTypes = {
-  GetAllPatient: PropTypes.func,
-  patient: PropTypes.object,
+AllUsers.propTypes = {
+  GetAllUsers: PropTypes.func,
+  users: PropTypes.object,
   businessId: PropTypes.string,
 };
 
 export const mapStateToProps = (state) => ({
-  patient: state.patient.patient,
-  patientError: state.patient.patientError,
-  status: state.patient.status,
+  users: state.user.users,
+  usersError: state.user.usersError,
+  status: state.user.status,
 });
 
-export default compose(withRouter, connect(mapStateToProps, { GetAllPatient }))(withStyles(pharmaStyles, LoaderStyles)(AllPatients));
+export default compose(withRouter, connect(mapStateToProps, { GetAllUsers }))(withStyles(pharmaStyles, LoaderStyles)(AllUsers));

@@ -1,5 +1,5 @@
-
 import jwtDecode from 'jsonwebtoken';
+import isAuth from './isAuthenticated';
 
 export const storeToken = (token) => localStorage.setItem('token', token);
 export const storeUserId = (userId) => localStorage.setItem('userId', userId);
@@ -7,4 +7,19 @@ export const storebusinessId = (businessId) => localStorage.setItem('businessId'
 
 export const getToken = () => localStorage.getItem('token');
 
-export default { storeToken, storeUserId, getToken };
+export const checkAdmin = () => {
+  const userInfo = isAuth();
+  if (userInfo) {
+    const { payload } = userInfo;
+    const { role } = payload;
+    if (role !== 1) {
+      return false;
+    }
+    return true;
+  }
+  return false;
+};
+
+export default {
+  storeToken, storeUserId, getToken, checkAdmin,
+};
