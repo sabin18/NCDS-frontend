@@ -1,5 +1,6 @@
 import {
-  MYBUSINESSES_SUCCESS, MYBUSINESSES_ERROR, MY_SINGLE_BUSINESSES_SUCCESS, MY_SINGLE_BUSINESSES_ERROR,
+  MYBUSINESSES_SUCCESS, MYBUSINESSES_ERROR, MY_SINGLE_BUSINESSES_SUCCESS, MY_SINGLE_BUSINESSES_ERROR, ALL_BUSINESSES_SUCCESS, 
+  ALL_BUSINESSES_ERROR, ADD_BUSINESS_SUCCESS, ADD_BUSINESS_ERROR,
 } from '../actions/types';
 
 const initialState = {
@@ -7,6 +8,10 @@ const initialState = {
   businessError: null,
   singleBusiness: null,
   singleBusinessError: null,
+  allBusiness: null,
+  allBusinessError: null,
+  addBusiness: null,
+  addBusinessError: null,
 };
 
 export default (state = initialState, action) => {
@@ -38,6 +43,34 @@ export default (state = initialState, action) => {
         ...state,
         singleBusiness: null,
         singleBusinessError: action.payload,
+        status: 'Failure',
+      };
+    case ALL_BUSINESSES_SUCCESS:
+      return {
+        ...state,
+        allBusiness: action.payload,
+        allBusinessError: null,
+        status: 'Success',
+      };
+    case ALL_BUSINESSES_ERROR:
+      return {
+        ...state,
+        allBusiness: null,
+        allBusinessError: action.payload,
+        status: 'Failure',
+      };
+    case ADD_BUSINESS_SUCCESS:
+      return {
+        ...state,
+        addBusiness: action.payload,
+        addBusinessError: null,
+        status: 'Success',
+      };
+    case ADD_BUSINESS_ERROR:
+      return {
+        ...state,
+        addBusiness: null,
+        addBusinessError: action.payload,
         status: 'Failure',
       };
     default:
