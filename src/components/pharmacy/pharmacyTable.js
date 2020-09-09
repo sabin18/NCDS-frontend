@@ -171,17 +171,12 @@ const EnhancedTable = (props) => {
                       <TableCell align="left">
                       <ButtonGroup>
                       <Link to="/pharmacy">
-                      <Tooltip title="Add Medical Record">
-                                  <IconButton aria-label="delete">
-                                    <PostAddIcon />
-                                  </IconButton>
-                      </Tooltip>
-                      </Link>
                       <Tooltip title="Edit">
                                   <IconButton aria-label="Edit">
                                     <EditIcon />
                                   </IconButton>
                       </Tooltip>
+                      </Link>
                       </ButtonGroup>
                       </TableCell>
                     </TableRow>
