@@ -7,6 +7,7 @@ import medicationsReducer from './medicationsReducer';
 import medicalRecordReducer from './medicalRecordReducer';
 import usersReducer from './usersReducer';
 import rolesReducer from './rolesReducer';
+import employeeaReducer from './employeeReducer';
 
 export default combineReducers({
   auth: authReducer,
@@ -17,5 +18,6 @@ export default combineReducers({
   record: medicalRecordReducer,
   user: usersReducer,
   role: rolesReducer,
+  employee: employeeaReducer,
 
 });
