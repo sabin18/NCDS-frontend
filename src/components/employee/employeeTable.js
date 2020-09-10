@@ -14,6 +14,7 @@ import Switch from '@material-ui/core/Switch';
 import Tooltip from '@material-ui/core/Tooltip';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import IconButton from '@material-ui/core/IconButton';
+import PostAddIcon from '@material-ui/icons/PostAdd';
 import EditIcon from '@material-ui/icons/Edit';
 import TableStyles from '../../styles/patientsTableStyles';
 import EnhancedTableHead from './EnhancedTableHead';
@@ -42,18 +43,17 @@ const stableSort = (array, comparator) => {
   });
   return stabilizedThis.map((el) => el[0]);
 };
-const searching = (search) => (x) => x.name.toLowerCase().includes(search.toLowerCase())
-|| x.district.toLowerCase().includes(search.toLowerCase())
-|| x.sector.toLowerCase().includes(search.toLowerCase())
+const searching = (search) => (x) => x.user.phoneNumber.toLowerCase().includes(search.toLowerCase())
 || x.user.firstName.toLowerCase().includes(search.toLowerCase())
 || x.user.lastName.toLowerCase().includes(search.toLowerCase())
 || x.user.email.toLowerCase().includes(search.toLowerCase())
-|| x.user.phoneNumber.toLowerCase().includes(search.toLowerCase())
+|| x.business.name.toLowerCase().includes(search.toLowerCase())
 || !search;
 
 // table component
 const EnhancedTable = (props) => {
   const { data, search, handleSearch } = props;
+  const { businessId } = localStorage;
   const rows = data;
   const classes = TableStyles();
   const [order, setOrder] = React.useState('asc');
@@ -158,27 +158,29 @@ const EnhancedTable = (props) => {
                           inputProps={{ 'aria-labelledby': labelId }}
                         />
                       </TableCell>
-                      <TableCell align="left">{row.name}</TableCell>
-                      <TableCell align="left">{row.district}</TableCell>
-                      <TableCell align="left">{row.sector}</TableCell>
-                      <TableCell align="left">
-                      {row.user.firstName}
-                      {' '}
-                      {row.user.lastName}
+                      <TableCell component="th" id={labelId} scope="row" padding="none">
+                        {row.user.firstName}
                       </TableCell>
+                      <TableCell align="left">{row.user.lastName}</TableCell>
                       <TableCell align="left">{row.user.phoneNumber}</TableCell>
-                      <TableCell align="left">{row.user.email}</TableCell>
-                      <TableCell align="left">{row.payments ? row.payments.payDate : 'No Payment yet'}</TableCell>
-                      <TableCell align="left">{row.payments ? row.payments.expiryDate : 'No Payment yet'}</TableCell>
+                      <TableCell align="left">{row.user.email || 'No Email'}</TableCell>
+                      <TableCell align="left">{row.business.name}</TableCell>
+                      <TableCell align="left">{row.user.isActive === true ? 'YES' : 'NO'}</TableCell>
+                      <TableCell align="left">{row.user.roles.name}</TableCell>
                       <TableCell align="left">
                       <ButtonGroup>
-                      <Link to="/pharmacy">
+                      <Link to={`/employee/${businessId}/${row.id}`}>
+                      <Tooltip title="Add Medical Record">
+                                  <IconButton aria-label="delete">
+                                    <PostAddIcon />
+                                  </IconButton>
+                      </Tooltip>
+                      </Link>
                       <Tooltip title="Edit">
                                   <IconButton aria-label="Edit">
                                     <EditIcon />
                                   </IconButton>
                       </Tooltip>
-                      </Link>
                       </ButtonGroup>
                       </TableCell>
                     </TableRow>
