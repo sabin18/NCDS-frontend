@@ -138,24 +138,6 @@ export class AddDisease extends Component {
                 </Button>
                 </div>
               </div>
-              {/* <div className={classes.addPatientButton}>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                size="large"
-                disabled={open}
-                startIcon={<SaveIcon />}
-              >
-               {open ? (
-                <Loader
-                  classes={classes}
-                  onclick={this.handleClose}
-                  open={open}
-                />
-               ) : 'Save' }
-              </Button>
-              </div> */}
         </form>
         </Paper>
         </Grid>
