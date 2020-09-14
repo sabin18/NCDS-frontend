@@ -31,7 +31,7 @@ const EnhancedTableToolbar = (props) => {
           </Typography>
         ) : (
           <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-            Diseases
+            Medications
           </Typography>
         )}
         {numSelected > 0 ? (
@@ -56,9 +56,9 @@ const EnhancedTableToolbar = (props) => {
           {numSelected > 0 ? (
             ''
           ) : (
-          <Link to="/disease">
-          <Tooltip title="Add new Disease">
-            <IconButton aria-label="Add new Disease">
+          <Link to="/medication">
+          <Tooltip title="Add new Medication">
+            <IconButton aria-label="Add new Medication">
             <PersonAddIcon />
             </IconButton>
           </Tooltip>

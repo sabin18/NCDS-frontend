@@ -16,10 +16,10 @@ import Divider from '@material-ui/core/Divider';
 import LoaderStyles from '../../styles/loaderStyles';
 import addPatientStyles from '../../styles/addPatientStyles';
 import addDiseaseStyles from '../../styles/addDiseaseStyles';
-import { AddNewDisease, uploadDisease } from '../../actions/diseasesActions';
+import { AddNewMedication, uploadMedication } from '../../actions/medicationActions';
 import Loader from '../main components/loader';
 
-export class AddDisease extends Component {
+export class AddMedication extends Component {
    state = {
      open: false,
      name: '',
@@ -44,8 +44,8 @@ export class AddDisease extends Component {
        e.preventDefault();
        const { name } = this.state;
        this.setState({ open: true });
-       const { AddNewDisease } = this.props;
-       await AddNewDisease(name);
+       const { AddNewMedication } = this.props;
+       await AddNewMedication(name);
        this.setState({
          open: false, name: '',
        });
@@ -55,10 +55,10 @@ export class AddDisease extends Component {
        e.preventDefault();
        const { file } = this.state;
        this.setState({ open: true });
-       const { uploadDisease } = this.props;
+       const { uploadMedication } = this.props;
        const fileData = new FormData();
        fileData.append('file', file);
-       await uploadDisease(fileData);
+       await uploadMedication(fileData);
        this.setState({
          open: false, file: '',
        });
@@ -77,18 +77,18 @@ export class AddDisease extends Component {
         <Paper className={classes.paper}>
         <form className={classes.root} noValidate autoComplete="on" onSubmit={this.handleSubmit}>
               <Typography variant="h5" gutterBottom className={classes.formTitle}>
-                ADD NEW DISEASE
+                ADD NEW MEDICATION
               </Typography>
               <Divider className={classes.diver} />
               <Typography variant="button" gutterBottom className={classes.addPatientContiner}>
-                <b>DISEASE DETAILS</b>
+                <b>MEDICATION DETAILS</b>
               </Typography>
               <div>
                 <TextField
                   id="standard-basic"
                   value={name}
                   onChange={(e) => this.handleChange(e)}
-                  label="Disease Name"
+                  label="Medication Name"
                   name="name"
                 />
                 <Button
@@ -111,7 +111,7 @@ export class AddDisease extends Component {
                 <Divider className={classes.diver} />
                 <div className={classes.DiseaseContiner}>
                 <Typography variant="button" gutterBottom className={classes.addPatientContiner}>
-                <b>UPLOAD DISEASES FILE</b>
+                <b>UPLOAD MEDICATION FILE</b>
                 </Typography>
                 <TextField
                   type="file"
@@ -146,17 +146,18 @@ export class AddDisease extends Component {
      }
 }
 
-AddDisease.propTypes = {
-  AddNewDisease: PropTypes.func,
+AddMedication.propTypes = {
+  AddNewMedication: PropTypes.func,
+  uploadMedication: PropTypes.func,
   classes: PropTypes.object,
 };
 
 export const mapStateToProps = (state) => ({
-  addDiseases: state.disease.addDiseases,
-  addDiseasesError: state.disease.addDiseasesError,
-  uploadDiseases: state.disease.uploadDiseases,
-  uploadDiseasesError: state.disease.uploadDiseasesError,
+  addMedication: state.medication.addMedication,
+  addMedicationError: state.medication.addMedicationError,
+  uploadMedication: state.medication.uploadMedication,
+  uploadMedicationError: state.medication.uploadMedicationError,
 
 });
 
-export default compose(withRouter, connect(mapStateToProps, { AddNewDisease, uploadDisease }))(withStyles(addPatientStyles, LoaderStyles, addDiseaseStyles)(AddDisease));
+export default compose(withRouter, connect(mapStateToProps, { AddNewMedication, uploadMedication }))(withStyles(addPatientStyles, LoaderStyles, addDiseaseStyles)(AddMedication));
