@@ -33,8 +33,10 @@ export class App extends Component {
           <ProtectedRoute exact path="/patients/:businessId" component={Dashboard} />
           <ProtectedRoute exact path="/patient/:businessId" component={Dashboard} />
           <ProtectedRoute exact path="/medications" component={Dashboard} />
+          <ProtectedRoute exact path="/medication" component={Dashboard} />
           <ProtectedRoute exact path="/medicals" component={Dashboard} />
           <ProtectedRoute exact path="/diseases" component={Dashboard} />
+          <ProtectedRoute exact path="/disease" component={Dashboard} />
           <ProtectedRoute exact path="/admin/pharmacies" component={Dashboard} />
           <ProtectedRoute exact path="/admin/pharmacy" component={Dashboard} />
           <ProtectedRoute exact path="/users" component={Dashboard} />

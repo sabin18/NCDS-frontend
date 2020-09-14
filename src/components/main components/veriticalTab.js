@@ -26,6 +26,10 @@ import AllPharmacies from '../pharmacy/viewPharmacies';
 import AddPharmacy from '../pharmacy/addPharmacy';
 import AllEmployee from '../employee/viewEmployee';
 import AddEmployee from '../employee/addEmployee';
+import AllDiseases from '../diseases/viewDiseases';
+import AddDisease from '../diseases/addDisease';
+import AllMedications from '../medications/viewMedications';
+import AddMedication from '../medications/addMedications';
 
 const a11yProps = (index) => ({
   id: `vertical-tab-${index}`,
@@ -72,12 +76,24 @@ const VerticalTabs = (props) => {
       <TabPanel value={location.pathname} index={`/patient/${businessId}`}>
       <AddPatient />
       </TabPanel>
+       {/* Medications */}
+
       <TabPanel value={location.pathname} index="/medications">
-      Medications
+      <AllMedications />
       </TabPanel>
+      <TabPanel value={location.pathname} index="/medication">
+      <AddMedication />
+      </TabPanel>
+
+      {/* Diseases */}
+
       <TabPanel value={location.pathname} index="/diseases">
-        Diseases
+      <AllDiseases />
       </TabPanel>
+      <TabPanel value={location.pathname} index="/disease">
+      <AddDisease />
+      </TabPanel>
+      {/* pharmacies */}
       <TabPanel value={location.pathname} index="/admin/pharmacies">
       <AllPharmacies />
       </TabPanel>
