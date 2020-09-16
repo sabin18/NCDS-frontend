@@ -30,6 +30,7 @@ import AllDiseases from '../diseases/viewDiseases';
 import AddDisease from '../diseases/addDisease';
 import AllMedications from '../medications/viewMedications';
 import AddMedication from '../medications/addMedications';
+import AllMedicalRecords from '../Medical Records/viewMedicalRecord';
 
 const a11yProps = (index) => ({
   id: `vertical-tab-${index}`,
@@ -59,7 +60,7 @@ const VerticalTabs = (props) => {
         className={classes.tabs}
       >
         <Tab icon={<PeopleIcon />} component={Link} label="Patients" to={`/patients/${businessId}`} {...a11yProps(0)} />
-        <Tab icon={<AssignmentIcon />} component={Link} label=" Medical Records" to="/medications" {...a11yProps(1)} />
+        <Tab icon={<AssignmentIcon />} component={Link} label=" Medical Records" to="/medicalRecords" {...a11yProps(1)} />
         <Tab icon={<LocalHospitalIcon />} component={Link} label="Medications" to="/medications" {...a11yProps(2)} />
         <Tab icon={<ReportProblemIcon />} component={Link} label="Diseases" to="/diseases" {...a11yProps(3)} />
         {checkAdmin() ? <Tab icon={<LocalPharmacyIcon />} component={Link} label="Pharmacy" to="/admin/pharmacies" {...a11yProps(4)} /> : ''}
@@ -70,9 +71,15 @@ const VerticalTabs = (props) => {
       <TabPanel value={location.pathname} index={`/patients/${businessId}`}>
        <AllPatients businessId={businessId} />
       </TabPanel>
+       {/* Medical record */}
+
       <TabPanel value={location.pathname} index={`/patient/${businessId}/${patientId}`}>
       <AddMedicalRecords />
       </TabPanel>
+      <TabPanel value={location.pathname} index="/medicalRecords">
+      <AllMedicalRecords />
+      </TabPanel>
+
       <TabPanel value={location.pathname} index={`/patient/${businessId}`}>
       <AddPatient />
       </TabPanel>

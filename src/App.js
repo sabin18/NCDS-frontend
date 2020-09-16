@@ -41,7 +41,8 @@ export class App extends Component {
           <ProtectedRoute exact path="/admin/pharmacy" component={Dashboard} />
           <ProtectedRoute exact path="/users" component={Dashboard} />
           <ProtectedRoute exact path="/employees" component={Dashboard} />
-          <ProtectedRoute exact path="/employee" component={Dashboard} />
+          <ProtectedRoute exact path="/medicalRecords" component={Dashboard} />
+          <ProtectedRoute exact path="/emp" component={Dashboard} />
           <ProtectedRoute exact path="*" component={NotFound} />
         </Switch>
         <ToastContainer />
