@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -23,6 +24,7 @@ function PrimarySearchAppBar(props) {
   const classes = menuStyle();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const { history } = props;
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -61,6 +63,15 @@ function PrimarySearchAppBar(props) {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem
+        onClick={() => {
+          window.localStorage.removeItem('token');
+          window.localStorage.removeItem('businessId');
+          history.push('/login');
+        }}
+      >
+        Logout
+      </MenuItem>
     </Menu>
   );
 
@@ -176,6 +187,10 @@ function PrimarySearchAppBar(props) {
     </div>
   );
 }
+
+PrimarySearchAppBar.propTypes = {
+  history: PropTypes.object.isRequired,
+};
 
 export const mapStateToProps = (state) => ({
   singlePharmacy: state.pharmacy.singleBusiness,
