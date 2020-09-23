@@ -1,4 +1,4 @@
-import { GET_PATIENT_SUCCESS, GET_PATIENT_ERROR, GET_SINGLE_PATIENT_SUCCESS, GET_SINGLE_PATIENT_ERROR, ADD_PATIENT_SUCCESS, ADD_PATIENT_ERROR } from '../actions/types';
+import { GET_PATIENT_SUCCESS, GET_PATIENT_ERROR, GET_SINGLE_PATIENT_SUCCESS, GET_SINGLE_PATIENT_ERROR, ADD_PATIENT_SUCCESS, ADD_PATIENT_ERROR, DELETE_PATIENT_SUCCESS, DELETE_PATIENT_ERROR } from '../actions/types';
 
 const initialState = {
   patient: null,
@@ -7,6 +7,8 @@ const initialState = {
   singleatientError: null,
   addPatient: null,
   addpatientError: null,
+  deletePatient: null,
+  deletePatientError: null,
 };
 
 export default (state = initialState, action) => {
@@ -51,6 +53,20 @@ export default (state = initialState, action) => {
         ...state,
         addPatient: null,
         addPatientError: action.payload,
+        status: 'Failure',
+      };
+    case DELETE_PATIENT_SUCCESS:
+      return {
+        ...state,
+        deletePatient: action.payload,
+        deletePatientError: null,
+        status: 'Success',
+      };
+    case DELETE_PATIENT_ERROR:
+      return {
+        ...state,
+        deletePatient: null,
+        deletePatientError: action.payload,
         status: 'Failure',
       };
     default:

@@ -1,4 +1,4 @@
-import { GET_EMPLOYEE_SUCCESS, GET_EMPLOYEE_ERROR, ADD_EMPLOYEE_SUCCESS, ADD_EMPLOYEE_ERROR } from '../actions/types';
+import { GET_EMPLOYEE_SUCCESS, GET_EMPLOYEE_ERROR, ADD_EMPLOYEE_SUCCESS, ADD_EMPLOYEE_ERROR, DELETE_EMPLOYEE_SUCCESS, DELETE_EMPLOYEE_ERROR } from '../actions/types';
 
 const initialState = {
   employees: null,
@@ -31,6 +31,20 @@ export default (state = initialState, action) => {
         status: 'Success',
       };
     case ADD_EMPLOYEE_ERROR:
+      return {
+        ...state,
+        addEmployees: null,
+        addEmployeesError: action.payload,
+        status: 'Failure',
+      };
+    case DELETE_EMPLOYEE_SUCCESS:
+      return {
+        ...state,
+        addEmployees: action.payload,
+        addEmployeesError: null,
+        status: 'Success',
+      };
+    case DELETE_EMPLOYEE_ERROR:
       return {
         ...state,
         addEmployees: null,

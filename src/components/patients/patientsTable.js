@@ -19,6 +19,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import TableStyles from '../../styles/patientsTableStyles';
 import EnhancedTableHead from './EnhancedTableHead';
 import EnhancedTableToolbar from './EnhancedTableToolbar';
+import AlertDialog from '../main components/deleteModal';
 
 const descendingComparator = (a, b, orderBy) => {
   if (b[orderBy] < a[orderBy]) {
@@ -50,7 +51,7 @@ const searching = (search) => (x) => x.phone.toLowerCase().includes(search.toLow
 
 // table component
 const EnhancedTable = (props) => {
-  const { data, search, handleSearch } = props;
+  const { data, search, handleSearch, handleClickOpen, open, handleClose, handleDelete } = props;
   const { businessId } = localStorage;
   const rows = data;
   const classes = TableStyles();
@@ -115,8 +116,18 @@ const EnhancedTable = (props) => {
 
   return (
     <div className={classes.root}>
+      {open
+        ? (
+          <AlertDialog
+            open={open}
+            handleClose={handleClose}
+            handleDelete={handleDelete}
+            selected={selected}
+            item="patient"
+          />
+        ) : '' }
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} handleSearch={handleSearch} search={search} />
+        <EnhancedTableToolbar numSelected={selected.length} handleSearch={handleSearch} search={search} handleClickOpen={handleClickOpen} />
         <TableContainer>
           <Table
             className={classes.table}
