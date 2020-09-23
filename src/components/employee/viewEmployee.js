@@ -6,7 +6,7 @@ import { compose } from 'redux';
 import { withStyles } from '@material-ui/core/styles';
 import LoaderStyles from '../../styles/loaderStyles';
 import pharmaStyles from '../../styles/pharmacyStyles';
-import { GetAllEmployee } from '../../actions/employeeActions';
+import { GetAllEmployee, DeleteEmployee } from '../../actions/employeeActions';
 import EnhancedTable from './employeeTable';
 import TableLoader from '../main components/tableLoader';
 
@@ -14,6 +14,7 @@ export class AllEmployee extends Component {
    state = {
      isLoading: false,
      search: '',
+     open: false,
    };
 
    async componentDidMount() {
@@ -30,12 +31,31 @@ export class AllEmployee extends Component {
      this.setState({ search: value });
    };
 
-   render() {
-     const { employees } = this.props;
-     const { isLoading, search } = this.state;
-     const employeeData = employees && employees.data;
-     document.title = 'NCDS -employee';
-     return (
+   handleClickOpen = async () => {
+     console.log('======>click');
+     this.setState({ open: true });
+   };
+
+  handleDelete = async (selectId) => {
+    const { props } = this;
+    this.setState({ isLoading: true });
+    const { businessId } = localStorage;
+    console.log('======>delete');
+    await props.DeleteEmployee(businessId, selectId);
+    await props.GetAllEmployee(businessId);
+    this.setState({ open: false, isLoading: false });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
+  render() {
+    const { employees } = this.props;
+    const { isLoading, search, open } = this.state;
+    const employeeData = employees && employees.data;
+    document.title = 'NCDS -employee';
+    return (
         <div>
           {isLoading ? <TableLoader /> : employeeData && employeeData
           && (
@@ -44,11 +64,15 @@ export class AllEmployee extends Component {
             search={search}
             searching={this.searching}
             handleSearch={this.handleSearch}
+            handleClickOpen={this.handleClickOpen}
+            open={open}
+            handleClose={this.handleClose}
+            handleDelete={this.handleDelete}
           />
           )}
         </div>
-     );
-   }
+    );
+  }
 }
 
 AllEmployee.propTypes = {
@@ -62,4 +86,4 @@ export const mapStateToProps = (state) => ({
   status: state.employee.status,
 });
 
-export default compose(withRouter, connect(mapStateToProps, { GetAllEmployee }))(withStyles(pharmaStyles, LoaderStyles)(AllEmployee));
+export default compose(withRouter, connect(mapStateToProps, { GetAllEmployee, DeleteEmployee }))(withStyles(pharmaStyles, LoaderStyles)(AllEmployee));

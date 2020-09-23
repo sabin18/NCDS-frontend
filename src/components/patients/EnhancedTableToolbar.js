@@ -15,7 +15,7 @@ import useToolbarStyles from '../../styles/enhancedTableToolbar';
 
 const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles();
-  const { numSelected, search, handleSearch } = props;
+  const { numSelected, search, handleSearch, handleClickOpen } = props;
   const { businessId } = localStorage;
   return (
       <Toolbar
@@ -26,8 +26,8 @@ const EnhancedTableToolbar = (props) => {
         {numSelected > 0 ? (
           <Typography className={classes.title} color="inherit" variant="subtitle1" component="div">
             {numSelected}
-  {' '}
-  selected
+            {' '}
+            selected
           </Typography>
         ) : (
           <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
@@ -66,7 +66,7 @@ const EnhancedTableToolbar = (props) => {
           )}
         {numSelected > 0 ? (
           <Tooltip title="Delete">
-            <IconButton aria-label="delete">
+            <IconButton aria-label="delete" onClick={() => handleClickOpen()}>
               <DeleteIcon />
             </IconButton>
           </Tooltip>

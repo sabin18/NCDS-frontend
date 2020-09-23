@@ -6,7 +6,7 @@ import { compose } from 'redux';
 import { withStyles } from '@material-ui/core/styles';
 import LoaderStyles from '../../styles/loaderStyles';
 import pharmaStyles from '../../styles/pharmacyStyles';
-import { GetAllPatient } from '../../actions/patientsActions';
+import { GetAllPatient, DeletePatient } from '../../actions/patientsActions';
 import EnhancedTable from './patientsTable';
 import TableLoader from '../main components/tableLoader';
 
@@ -14,6 +14,7 @@ export class AllPatients extends Component {
    state = {
      isLoading: false,
      search: '',
+     open: false,
    };
 
    async componentDidMount() {
@@ -29,9 +30,27 @@ export class AllPatients extends Component {
      this.setState({ search: value });
    };
 
+   handleClickOpen = async () => {
+     this.setState({ open: true });
+   };
+
+   handleDelete = async (selectId) => {
+     const { props } = this;
+     this.setState({ isLoading: true });
+     const { businessId } = localStorage;
+     await props.DeletePatient(businessId, selectId);
+     await props.GetAllPatient(businessId);
+     this.setState({ open: false, isLoading: false });
+
+   };
+
+   handleClose = () => {
+     this.setState({ open: false });
+   };
+
    render() {
      const { patient } = this.props;
-     const { isLoading, search } = this.state;
+     const { isLoading, search, open } = this.state;
      const patientsData = patient && patient.data;
      document.title = 'NCDS -Patients';
      return (
@@ -43,6 +62,10 @@ export class AllPatients extends Component {
             search={search}
             searching={this.searching}
             handleSearch={this.handleSearch}
+            handleClickOpen={this.handleClickOpen}
+            open={open}
+            handleClose={this.handleClose}
+            handleDelete={this.handleDelete}
           />
           )}
         </div>
@@ -52,6 +75,7 @@ export class AllPatients extends Component {
 
 AllPatients.propTypes = {
   GetAllPatient: PropTypes.func,
+  DeletePatient: PropTypes.func,
   patient: PropTypes.object,
   businessId: PropTypes.string,
 };
@@ -59,7 +83,9 @@ AllPatients.propTypes = {
 export const mapStateToProps = (state) => ({
   patient: state.patient.patient,
   patientError: state.patient.patientError,
+  deletePatient: state.patient.deletePatient,
+  deletePatientError: state.patient.deletePatientError,
   status: state.patient.status,
 });
 
-export default compose(withRouter, connect(mapStateToProps, { GetAllPatient }))(withStyles(pharmaStyles, LoaderStyles)(AllPatients));
+export default compose(withRouter, connect(mapStateToProps, { GetAllPatient, DeletePatient }))(withStyles(pharmaStyles, LoaderStyles)(AllPatients));

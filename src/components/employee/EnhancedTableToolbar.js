@@ -15,7 +15,7 @@ import useToolbarStyles from '../../styles/enhancedTableToolbar';
 
 const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles();
-  const { numSelected, search, handleSearch } = props;
+  const { numSelected, search, handleSearch, handleClickOpen } = props;
   return (
       <Toolbar
         className={clsx(classes.root, {
@@ -65,7 +65,7 @@ const EnhancedTableToolbar = (props) => {
           )}
         {numSelected > 0 ? (
           <Tooltip title="Delete">
-            <IconButton aria-label="delete">
+            <IconButton aria-label="delete" onClick={() => handleClickOpen()}>
               <DeleteIcon />
             </IconButton>
           </Tooltip>
