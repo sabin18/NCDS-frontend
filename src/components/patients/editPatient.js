@@ -37,7 +37,8 @@ export class EditPatients extends Component {
      await props.GetSinglePatient(businessId, patientId);
      const { singlePatient } = this.props;
      const patientData = singlePatient.data;
-     this.setState({ firstName: patientData.firstName, lastName: patientData.lastName, phone: patientData.phone, email: singlePatient.email,
+     this.setState({
+       firstName: patientData.firstName, lastName: patientData.lastName, phone: patientData.phone, email: singlePatient.email,
      });
      this.setState({ isLoading: false });
    }
@@ -52,7 +53,9 @@ export class EditPatients extends Component {
 
       handleSubmit = async (e) => {
         e.preventDefault();
-        const { firstName, lastName, phone, email } = this.state;
+        const {
+          firstName, lastName, phone, email,
+        } = this.state;
         this.setState({ open: true });
         const { businessId } = localStorage;
         const { EditPatient, match } = this.props;
@@ -79,7 +82,9 @@ export class EditPatients extends Component {
         const {
           classes, singlePatient,
         } = this.props;
-        const { firstName, lastName, phone, email, open, isLoading } = this.state;
+        const {
+          firstName, lastName, phone, email, open, isLoading,
+        } = this.state;
         document.title = 'NCDS - Edit Patient';
         return (
        <div>
