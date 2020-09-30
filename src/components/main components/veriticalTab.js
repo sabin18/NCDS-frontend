@@ -18,6 +18,7 @@ import LoaderStyles from '../../styles/loaderStyles';
 import VerticalTabStyles from '../../styles/veriticalTab';
 import { checkAdmin } from '../../helpers/authHelpers';
 import AllPatients from '../patients/viewPatients';
+import EditPatients from '../patients/editPatient'
 import AddPatient from '../patients/addPatient';
 import AddMedicalRecords from '../Medical Records/AddMedicalRecord';
 import AllUsers from '../users/viewUsers';
@@ -67,9 +68,12 @@ const VerticalTabs = (props) => {
         {checkAdmin() ? <Tab icon={<GroupAddIcon />} component={Link} label="Users" to="/users" {...a11yProps(5)} /> : ''}
         <Tab icon={<GroupAddIcon />} component={Link} label="Employee" to="/employees" {...a11yProps(5)} />
       </Tabs>
-
+      {/* Medical patient */}
       <TabPanel value={location.pathname} index={`/patients/${businessId}`}>
        <AllPatients businessId={businessId} />
+      </TabPanel>
+      <TabPanel value={location.pathname} index={`/edit/patient/${patientId}`}>
+       <EditPatients />
       </TabPanel>
        {/* Medical record */}
 

@@ -188,11 +188,13 @@ const EnhancedTable = (props) => {
                                   </IconButton>
                       </Tooltip>
                       </Link>
+                      <Link to={`/edit/patient/${row.id}`}>
                       <Tooltip title="Edit">
                                   <IconButton aria-label="Edit">
                                     <EditIcon />
                                   </IconButton>
                       </Tooltip>
+                      </Link>
                       </ButtonGroup>
                       </TableCell>
                     </TableRow>

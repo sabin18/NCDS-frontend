@@ -1,4 +1,4 @@
-import { GET_PATIENT_SUCCESS, GET_PATIENT_ERROR, GET_SINGLE_PATIENT_SUCCESS, GET_SINGLE_PATIENT_ERROR, ADD_PATIENT_SUCCESS, ADD_PATIENT_ERROR, DELETE_PATIENT_SUCCESS, DELETE_PATIENT_ERROR } from './types';
+import { GET_PATIENT_SUCCESS, GET_PATIENT_ERROR, GET_SINGLE_PATIENT_SUCCESS, GET_SINGLE_PATIENT_ERROR, ADD_PATIENT_SUCCESS, ADD_PATIENT_ERROR, DELETE_PATIENT_SUCCESS, DELETE_PATIENT_ERROR, EDIT_PATIENT_SUCCESS, EDIT_PATIENT_ERROR } from './types';
 import backendCall from '../helpers/backendCall';
 import responseComponent from '../components/main components/responseComponent';
 
@@ -65,4 +65,18 @@ export const DeletePatient = (businessId, Id) => async (dispatch) => {
   }
 };
 
-export default { AddNewPatient, DeletePatient };
+export const EditPatient = (businessId, Id, patientData) => async (dispatch) => {
+  const { token } = localStorage;
+  const AuthUser = 'Bearer '.concat(token);
+  try {
+    const res = await backendCall.patch(`patients/${businessId}/${Id}`, patientData , { headers: { Authorization: AuthUser } });
+    const response = res.data;
+    dispatch(businessType(EDIT_PATIENT_SUCCESS, response),
+      SuccessResponse(response));
+  } catch (error) {
+    dispatch(businessType(EDIT_PATIENT_ERROR, error.response));
+    ErrorResponse(error.response.data.Error);
+  }
+};
+
+export default { AddNewPatient, DeletePatient, EditPatient };
